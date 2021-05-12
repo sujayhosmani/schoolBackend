@@ -18,7 +18,7 @@ namespace jay.school.Controllers
         {
             _schoolService = schoolService;
         }
-// sample   2
+// sample   2     7
 
         [Route("getByPh/{ph}")]
         [HttpGet]
