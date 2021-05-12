@@ -1,0 +1,12 @@
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/bin/Debug/netstandard2.1/jay.school.bussiness.deps.json
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/bin/Debug/netstandard2.1/jay.school.bussiness.dll
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/bin/Debug/netstandard2.1/jay.school.bussiness.pdb
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/bin/Debug/netstandard2.1/jay.school.contracts.dll
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/bin/Debug/netstandard2.1/jay.school.contracts.pdb
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.csprojAssemblyReference.cache
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.AssemblyInfoInputs.cache
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.AssemblyInfo.cs
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.csproj.CoreCompileInputs.cache
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.csproj.CopyComplete
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.dll
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.pdb

@@ -22,6 +22,12 @@ namespace jay.school.contracts.Entities
         public string FatherPh { get; set; }
         public string PendingFee { get; set; }
         public string TotalPaidFee { get; set; }
+        public string DateOfJoining { get; set; }
+        public string DateOfBirth { get; set; }
+        public string ImageUrl { get; set; }
+        public Address PermanentAddress { get; set; }
+        public Address CurrentAddress { get; set; }
+
 
     }
 }

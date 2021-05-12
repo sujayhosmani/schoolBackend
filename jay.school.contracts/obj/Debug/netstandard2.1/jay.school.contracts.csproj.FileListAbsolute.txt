@@ -1,0 +1,9 @@
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/Debug/netstandard2.1/jay.school.contracts.csprojAssemblyReference.cache
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/Debug/netstandard2.1/jay.school.contracts.AssemblyInfoInputs.cache
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/Debug/netstandard2.1/jay.school.contracts.AssemblyInfo.cs
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/Debug/netstandard2.1/jay.school.contracts.csproj.CoreCompileInputs.cache
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/bin/Debug/netstandard2.1/jay.school.contracts.deps.json
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/bin/Debug/netstandard2.1/jay.school.contracts.dll
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/bin/Debug/netstandard2.1/jay.school.contracts.pdb
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/Debug/netstandard2.1/jay.school.contracts.dll
+/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/Debug/netstandard2.1/jay.school.contracts.pdb
