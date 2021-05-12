@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/0aad542c-10fb-44ea-8e24-bce420b9f31a/resourceGroups/jayschool/providers/Microsoft.Web/sites/jayschool",
+    "appService.deploySubpath": "publish"
+}
