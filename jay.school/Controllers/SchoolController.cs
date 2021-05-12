@@ -33,7 +33,7 @@ namespace jay.school.Controllers
         [HttpGet]
         public async Task<CustomResponse<Student>> GetStudentsById(string id)
         {
-
+//
             return await _schoolService.GetStudentsById(id);
 
         }
