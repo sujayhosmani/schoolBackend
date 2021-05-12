@@ -8,24 +8,26 @@
     ".NETStandard,Version=v2.1": []
   },
   "packageFolders": {
-    "/Users/sujayhosmani/.nuget/packages/": {}
+    "C:\\Users\\ajay2\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj",
+      "projectUniqueName": "C:\\Users\\ajay2\\source\\repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj",
       "projectName": "jay.school.contracts",
-      "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj",
-      "packagesPath": "/Users/sujayhosmani/.nuget/packages/",
-      "outputPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/",
+      "projectPath": "C:\\Users\\ajay2\\source\\repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj",
+      "packagesPath": "C:\\Users\\ajay2\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ajay2\\source\\repos\\sec\\jschool\\jay.school.contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/sujayhosmani/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ajay2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -58,7 +60,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
