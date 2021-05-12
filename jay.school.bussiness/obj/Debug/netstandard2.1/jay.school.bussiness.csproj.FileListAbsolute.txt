@@ -10,3 +10,15 @@
 /Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.csproj.CopyComplete
 /Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.dll
 /Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/Debug/netstandard2.1/jay.school.bussiness.pdb
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\bin\Debug\netstandard2.1\jay.school.bussiness.deps.json
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\bin\Debug\netstandard2.1\jay.school.bussiness.dll
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\bin\Debug\netstandard2.1\jay.school.bussiness.pdb
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\bin\Debug\netstandard2.1\jay.school.contracts.dll
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\bin\Debug\netstandard2.1\jay.school.contracts.pdb
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.csprojAssemblyReference.cache
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.AssemblyInfoInputs.cache
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.AssemblyInfo.cs
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.csproj.CoreCompileInputs.cache
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.csproj.CopyComplete
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.dll
+C:\Users\ajay2\Source\Repos\sec\jschool\jay.school.bussiness\obj\Debug\netstandard2.1\jay.school.bussiness.pdb
