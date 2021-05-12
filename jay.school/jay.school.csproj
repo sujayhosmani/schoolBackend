@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\jay.school.bussiness\jay.school.bussiness.csproj" />
+    <ProjectReference Include="..\jay.school.contracts\jay.school.contracts.csproj" />
+  </ItemGroup>
+
+</Project>
