@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\ajay2\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\ajay2\\.nuget\\packages"
+      "/Users/sujayhosmani/.dotnet/store/|arch|/|tfm|",
+      "/Users/sujayhosmani/.nuget/packages"
     ]
   }
 }
