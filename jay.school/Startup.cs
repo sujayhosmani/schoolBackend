@@ -37,14 +37,10 @@ namespace jay.school
 
             services.AddScoped<IMDBContext, SchoolMDBContext>();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("https://jayschool.azurewebsites.net")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
+            services.AddCors(c =>  
+            {  
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());  
+            });  
 
         }
 
@@ -58,7 +54,7 @@ namespace jay.school
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors(options => options.AllowAnyOrigin());  
 
             app.UseEndpoints(endpoints =>
             {

@@ -59,7 +59,7 @@ namespace jay.school.bussiness.Bussiness
                 return new CustomResponse<Student>(0, stud, null);
             }
             catch(Exception e) {
-                return new CustomResponse<Student>(0, null, e.Message);
+                return new CustomResponse<Student>(0, null, "modifieddd " + e.Message);
             }
             
         }
