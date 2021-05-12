@@ -1,33 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school/jay.school.csproj": {}
+    "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school\\jay.school.csproj": {}
   },
   "projects": {
-    "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/jay.school.bussiness.csproj": {
+    "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.bussiness\\jay.school.bussiness.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/jay.school.bussiness.csproj",
+        "projectUniqueName": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.bussiness\\jay.school.bussiness.csproj",
         "projectName": "jay.school.bussiness",
-        "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/jay.school.bussiness.csproj",
-        "packagesPath": "/Users/sujayhosmani/.nuget/packages/",
-        "outputPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/obj/",
+        "projectPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.bussiness\\jay.school.bussiness.csproj",
+        "packagesPath": "C:\\Users\\ajay2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.bussiness\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/sujayhosmani/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ajay2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netstandard2.1": {
             "targetAlias": "netstandard2.1",
             "projectReferences": {
-              "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj": {
-                "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj"
+              "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj": {
+                "projectPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj"
               }
             }
           }
@@ -66,26 +68,28 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj": {
+    "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj",
+        "projectUniqueName": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj",
         "projectName": "jay.school.contracts",
-        "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj",
-        "packagesPath": "/Users/sujayhosmani/.nuget/packages/",
-        "outputPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/obj/",
+        "projectPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj",
+        "packagesPath": "C:\\Users\\ajay2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/sujayhosmani/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ajay2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -118,37 +122,39 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school/jay.school.csproj": {
+    "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school\\jay.school.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school/jay.school.csproj",
+        "projectUniqueName": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school\\jay.school.csproj",
         "projectName": "jay.school",
-        "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school/jay.school.csproj",
-        "packagesPath": "/Users/sujayhosmani/.nuget/packages/",
-        "outputPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school/obj/",
+        "projectPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school\\jay.school.csproj",
+        "packagesPath": "C:\\Users\\ajay2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/sujayhosmani/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ajay2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp3.1"
+          "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
+          "net5.0": {
+            "targetAlias": "net5.0",
             "projectReferences": {
-              "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/jay.school.bussiness.csproj": {
-                "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.bussiness/jay.school.bussiness.csproj"
+              "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.bussiness\\jay.school.bussiness.csproj": {
+                "projectPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.bussiness\\jay.school.bussiness.csproj"
               },
-              "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj": {
-                "projectPath": "/Users/sujayhosmani/Documents/dotnetcore/jschool/jay.school.contracts/jay.school.contracts.csproj"
+              "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj": {
+                "projectPath": "C:\\Users\\ajay2\\Source\\Repos\\sec\\jschool\\jay.school.contracts\\jay.school.contracts.csproj"
               }
             }
           }
@@ -160,8 +166,8 @@
         }
       },
       "frameworks": {
-        "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
+        "net5.0": {
+          "targetAlias": "net5.0",
           "imports": [
             "net461",
             "net462",
@@ -172,16 +178,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[3.1.10, 3.1.10]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -190,7 +186,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
