@@ -46,7 +46,7 @@ namespace jay.school.bussiness.Bussiness
         public async Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec)
         {
             //TODO: add pagination later
-            List<Student> stud = await _student.FindAsync(stu => stu.Class == cls && stu.Setion == sec).Result.ToListAsync();
+            List<Student> stud = await _student.FindAsync(stu => stu.Class == cls && stu.Section == sec).Result.ToListAsync();
 
             return new CustomResponse<List<Student>>(0, stud, null);
         }

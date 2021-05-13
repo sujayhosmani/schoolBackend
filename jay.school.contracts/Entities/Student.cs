@@ -9,9 +9,9 @@ namespace jay.school.contracts.Entities
         public string StudentId { get; set; }
         public string Name { get; set; }
         public string Class { get; set; }
-        public string Setion { get; set; }
+        public string Section { get; set; }
         public string Gender { get; set; }
-        public string ClassNsection { get => ClassNsection; set { ClassNsection = Class + Setion; } }
+        public string ClassNsection { get => ClassNsection; set { ClassNsection = Class + Section; } }
         public string AdmissionNo { get; set; }
         public string RollNo { get; set; }
         public string Email { get; set; }
