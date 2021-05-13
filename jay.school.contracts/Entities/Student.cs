@@ -30,8 +30,8 @@ namespace jay.school.contracts.Entities
         public string DateOfJoining { get; set; }
         public string DateOfBirth { get; set; }
         public string ImageUrl { get; set; }
-        // public Address PermanentAddress { get; set; }
-        // public Address CurrentAddress { get; set; }
+        public Address PermanentAddress { get; set; }
+        public Address CurrentAddress { get; set; }
 
 
     }
