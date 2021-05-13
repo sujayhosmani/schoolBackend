@@ -23,7 +23,7 @@ namespace jay.school.bussiness.Bussiness
         public async Task<CustomResponse<Student>> AddStudent(Student student)
         {
             await _student.InsertOneAsync(student);
-   
+
             return new CustomResponse<Student>(1, student, null);
 
         }
@@ -36,11 +36,11 @@ namespace jay.school.bussiness.Bussiness
 
                 return new CustomResponse<string>(1, "Added " + students.Count.ToString() + " Records", null);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return new CustomResponse<string>(0, null, e.Message);
             }
-            
+
         }
 
         public async Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec)
@@ -53,15 +53,17 @@ namespace jay.school.bussiness.Bussiness
 
         public async Task<CustomResponse<Student>> GetStudentsById(string id)
         {
-            try {
+            try
+            {
                 Student stud = await _student.FindAsync(stu => stu.StudentId == id || stu.AdmissionNo == id).Result.FirstAsync();
 
                 return new CustomResponse<Student>(0, stud, null);
             }
-            catch(Exception e) {
-                return new CustomResponse<Student>(0, null, "modifieddd " + e.Message);
+            catch (Exception e)
+            {
+                return new CustomResponse<Student>(0, null, e.Message);
             }
-            
+
         }
 
         public async Task<CustomResponse<Student>> GetStudentsByPh(string ph)
@@ -73,12 +75,19 @@ namespace jay.school.bussiness.Bussiness
 
         public async Task<CustomResponse<List<Student>>> GetAllStudents()
         {
-            //TODO: add pagination later
-            List<Student> stud = await _student.FindAsync(stu => true).Result.ToListAsync();
+            try
+            {
+                List<Student> stud = await _student.FindAsync(stu => true).Result.ToListAsync();
 
-            return new CustomResponse<List<Student>>(0, stud, null);
+                return new CustomResponse<List<Student>>(0, stud, null);
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<Student>>(0, null, e.Message);
+            }
+            //TODO: add pagination later
+
         }
 
     }
 }
-                                                            
