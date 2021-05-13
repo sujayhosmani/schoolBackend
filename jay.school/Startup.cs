@@ -29,18 +29,22 @@ namespace jay.school
 
             services.AddMvc().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
 
+            services.AddCors(c =>  
+            {  
+                c.AddPolicy("AllowOrigin", options => {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });  
+            }); 
+            
             services.AddControllers();
 
             services.Configure<SchoolAppsettings>(Configuration);
 
             services.AddScoped<ISchoolService, SchoolBussiness>();
 
-            services.AddScoped<IMDBContext, SchoolMDBContext>();
-
-            services.AddCors(c =>  
-            {  
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());  
-            });  
+            services.AddScoped<IMDBContext, SchoolMDBContext>(); 
 
         }
 
@@ -54,7 +58,7 @@ namespace jay.school
 
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyOrigin());  
+            app.UseCors("AllowOrigin");  
 
             app.UseEndpoints(endpoints =>
             {
