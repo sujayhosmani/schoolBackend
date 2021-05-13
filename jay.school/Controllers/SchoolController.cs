@@ -49,18 +49,18 @@ namespace jay.school.Controllers
 
         [Route("add")]
         [HttpPost]
-        public async Task<CustomResponse<Student>> AddStudent(Student student)
+        public async Task<CustomResponse<Student>> AddStudent(CustomRequest<Student> student)
         {
 
-            return await _schoolService.AddStudent(student);
+            return await _schoolService.AddStudent(student.Data);
 
         }
 
         [Route("bulkAdd")]
         [HttpPost]
-        public async Task<CustomResponse<string>> AddStudents(List<Student> students)
+        public async Task<CustomResponse<string>> AddStudents(CustomRequest<List<Student>> students)
         {
-            return await _schoolService.AddStudents(students);
+            return await _schoolService.AddStudents(students.Data);
         }
     }
 }
