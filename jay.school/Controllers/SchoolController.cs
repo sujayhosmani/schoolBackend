@@ -47,6 +47,15 @@ namespace jay.school.Controllers
 
         }
 
+        [Route("getAllStudents")]
+        [HttpGet]
+        public async Task<CustomResponse<List<Student>>> GetAllStudents(string cls, string sec)
+        {
+
+            return await _schoolService.GetAllStudents();
+
+        }
+
         [Route("add")]
         [HttpPost]
         public async Task<CustomResponse<Student>> AddStudent(CustomRequest<Student> student)

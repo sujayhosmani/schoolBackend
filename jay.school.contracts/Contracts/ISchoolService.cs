@@ -12,6 +12,7 @@ namespace jay.school.contracts.Contracts
         Task<CustomResponse<Student>> GetStudentsByPh(string ph);
         Task<CustomResponse<Student>> GetStudentsById(string id);
         Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec);
+        Task<CustomResponse<List<Student>>> GetAllStudents();
         Task<CustomResponse<string>> AddStudents(List<Student> students);
     }
 }
