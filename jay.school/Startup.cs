@@ -42,7 +42,11 @@ namespace jay.school
 
             services.Configure<SchoolAppsettings>(Configuration);
 
-            services.AddScoped<ISchoolService, SchoolBussiness>();
+            services.AddTransient<ISchoolService, SchoolBussiness>();
+
+            services.AddTransient<ITeachersService, TeacherBussiness>();
+
+            services.AddTransient<IFileDocService, FileDocBussiness>();
 
             services.AddScoped<IMDBContext, SchoolMDBContext>(); 
 
@@ -51,7 +55,7 @@ namespace jay.school
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
