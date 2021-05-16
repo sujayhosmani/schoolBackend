@@ -33,7 +33,7 @@ namespace jay.school.bussiness.Bussiness
 
                         break;
                 }
-                string webRootPath = _hostingEnvironment.ContentRootPath;
+                string webRootPath = _hostingEnvironment.WebRootPath;
                 string newPath = Path.Combine(webRootPath, folderName);
                 if (!Directory.Exists(newPath))
                 {
@@ -55,7 +55,7 @@ namespace jay.school.bussiness.Bussiness
             }
             catch (System.Exception ex)
             {
-                return new CustomResponse<FileDoc>(0, null, "ERROR");
+                return new CustomResponse<FileDoc>(0, null, ex.Message);
             }
         }
 

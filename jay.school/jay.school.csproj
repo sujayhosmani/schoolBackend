@@ -9,4 +9,8 @@
     <ProjectReference Include="..\jay.school.contracts\jay.school.contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Resource\" />
+  </ItemGroup>
+
 </Project>

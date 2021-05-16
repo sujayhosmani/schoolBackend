@@ -61,6 +61,7 @@ namespace jay.school
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseCors("AllowOrigin");  
 
