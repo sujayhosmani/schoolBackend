@@ -19,6 +19,7 @@ namespace jay.school.bussiness.Bussiness
         }
         public async Task<CustomResponse<FileDoc>> UploadFile(FileDoc fileDoc1)
         {
+            string webRootPath2 = _hostingEnvironment.ContentRootPath;
             try
             {
                 var file = fileDoc1.File;  
@@ -33,7 +34,7 @@ namespace jay.school.bussiness.Bussiness
 
                         break;
                 }
-                string webRootPath = "http://20.197.31.247/data";
+                string webRootPath = "/var/www/data/";
                 string newPath = Path.Combine(webRootPath, folderName);
                 if (!Directory.Exists(newPath))
                 {
@@ -55,7 +56,7 @@ namespace jay.school.bussiness.Bussiness
             }
             catch (System.Exception ex)
             {
-                return new CustomResponse<FileDoc>(0, null, ex.Message);
+                return new CustomResponse<FileDoc>(0, null, ex.Message + webRootPath2);
             }
         }
 
