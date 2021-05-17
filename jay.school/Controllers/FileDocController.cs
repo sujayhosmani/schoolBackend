@@ -24,7 +24,7 @@ namespace jay.school.Controllers
             _fileDocService = fileDocService;
             _hostingEnvironment = hostingEnvironment;
         }
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
         public async Task<ActionResult<CustomResponse<FileDoc>>> UploadFile([FromForm] FileDoc fileDoc)
         {
 
