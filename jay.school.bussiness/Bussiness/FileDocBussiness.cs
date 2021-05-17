@@ -33,7 +33,7 @@ namespace jay.school.bussiness.Bussiness
 
                         break;
                 }
-                string webRootPath = _hostingEnvironment.WebRootPath;
+                string webRootPath = "http://20.197.31.247/data";
                 string newPath = Path.Combine(webRootPath, folderName);
                 if (!Directory.Exists(newPath))
                 {
