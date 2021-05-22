@@ -26,7 +26,7 @@ namespace jay.school.Controllers
         }
         [Route("teacher/{id}")]
         [HttpGet]
-        public async Task<ActionResult<CustomResponse<Teacher>>> GetTeacher(int id)
+        public async Task<ActionResult<CustomResponse<Teacher>>> GetTeacher(string id)
         {
             return await _teachersService.GetTeacher(id);
         }
