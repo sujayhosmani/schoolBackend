@@ -34,6 +34,7 @@ namespace jay.school.Controllers
         [HttpPost]
         public async Task<ActionResult<CustomResponse<string>>> AddTeachers(CustomRequest<Teacher> request)
         {
+            
             return await _teachersService.AddTeachers(request);
         }
     }

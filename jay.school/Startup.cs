@@ -3,14 +3,17 @@ using jay.school.bussiness.Repository;
 using jay.school.contracts.Contracts;
 using jay.school.contracts.Entities;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace jay.school
@@ -55,9 +58,35 @@ namespace jay.school
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(errorApp =>
+                {
+                    //Globar error handler
+                    errorApp.Run(async context =>
+                    {
+                        var logger = context.RequestServices.GetService<ILogger<Startup>>();
+
+                        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+
+                        context.Response.StatusCode = 500;
+
+                        context.Response.ContentType = "application/json";
+
+                        logger.LogError(exceptionHandlerPathFeature.Error, exceptionHandlerPathFeature.Error.Message, exceptionHandlerPathFeature.Path);
+
+                        CustomResponse<object> response = new CustomResponse<object>(0,null,string.Concat(exceptionHandlerPathFeature.Error, 
+                            exceptionHandlerPathFeature.Error.Message, exceptionHandlerPathFeature.Path));
+
+                        var result = JsonSerializer.Serialize(response);
+
+                        await context.Response.WriteAsync(result);
+                    });
+                });
             }
 
             app.UseRouting();
