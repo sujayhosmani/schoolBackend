@@ -12,7 +12,7 @@ namespace jay.school.contracts.Entities
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
-        public int TeacherId { get; set; }
+        public string TeacherId { get; set; }
         public string FirstName { get; set; }
         public string Gender { get; set; }
         public string DateOfBirth { get; set; }

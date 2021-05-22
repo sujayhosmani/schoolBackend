@@ -26,7 +26,7 @@ namespace jay.school.bussiness.Bussiness
            
         }
 
-        public async Task<CustomResponse<Teacher>> GetTeacher(int id)
+        public async Task<CustomResponse<Teacher>> GetTeacher(string id)
         {
             Teacher teacher = await _teacher.FindAsync(e => e.TeacherId == id).Result.FirstOrDefaultAsync();
 
