@@ -18,9 +18,9 @@ namespace jay.school.bussiness.Bussiness
             _teacherMDBContext = context;
             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
         }
-        public async Task<CustomResponse<string>> AddTeachers(CustomRequest<List<Teacher>> customRequest)
+        public async Task<CustomResponse<string>> AddTeachers(CustomRequest<Teacher> customRequest)
         {
-            await _teacher.InsertManyAsync(customRequest.Data);
+            await _teacher.InsertOneAsync(customRequest.Data);
 
             return new CustomResponse<string>(1, "Inserted Successfully", null);
            

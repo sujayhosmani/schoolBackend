@@ -12,6 +12,6 @@ namespace jay.school.contracts.Contracts
         Task<CustomResponse<Teacher>> GetTeacher(int id);
         Task<CustomResponse<List<Teacher>>> GetTeacherBySections(string section);
         Task<CustomResponse<Teacher>> GetTeacherBySection(string section);
-        Task<CustomResponse<string>> AddTeachers(CustomRequest<List<Teacher>> customRequest);
+        Task<CustomResponse<string>> AddTeachers(CustomRequest<Teacher> customRequest);
     }
 }

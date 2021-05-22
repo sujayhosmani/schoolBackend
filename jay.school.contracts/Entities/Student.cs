@@ -32,6 +32,8 @@ namespace jay.school.contracts.Entities
         public string ImageUrl { get; set; }
         public Address PermanentAddress { get; set; }
         public Address CurrentAddress { get; set; }
+        public string AdmissionCopy { get; set; }
+         public string Password { get; set; }
 
 
     }
