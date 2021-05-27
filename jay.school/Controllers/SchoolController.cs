@@ -83,10 +83,10 @@ namespace jay.school.Controllers
 
         [Route("addsubjects")]
         [HttpPost]
-        public async Task<CustomResponse<string>> AddSubjects(CustomRequest<List<SubjectsModel>> subjects)
+        public async Task<CustomResponse<string>> AddSubjects(CustomRequest<SubjectsModel> subject)
         {
             
-            return await _schoolService.AddSubjects(subjects.Data);
+            return await _schoolService.AddSubjects(subject.Data);
         }
 
         [Route("getTimeTable")]

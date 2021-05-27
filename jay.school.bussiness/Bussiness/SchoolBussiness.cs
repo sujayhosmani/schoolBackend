@@ -59,13 +59,18 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-        public async Task<CustomResponse<string>> AddSubjects(List<SubjectsModel> subjects)
+        public async Task<CustomResponse<string>> AddSubjects(SubjectsModel subject)
         {
             try
             {
-                await _subject.InsertManyAsync(subjects);
+                SubjectsModel found = await _subject.FindAsync(sub => ((subject.Subject == sub.Subject) || (subject.SubjectCode == sub.SubjectCode))).Result.FirstAsync();
 
-                return new CustomResponse<string>(1, "Added " + subjects.ToString() + " Records", null);
+                if(found != null){
+                    return new CustomResponse<string>(0, null, found.Subject + " already exists");
+                }
+                await _subject.InsertOneAsync(subject);
+
+                return new CustomResponse<string>(1, "Added " + subject.Subject + " to Records", null);
             }
             catch (Exception e)
             {
