@@ -18,6 +18,7 @@ namespace jay.school.bussiness.Bussiness
             _teacherMDBContext = context;
             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
         }
+        
         public async Task<CustomResponse<string>> AddTeachers(CustomRequest<Teacher> customRequest)
         {
             await _teacher.InsertOneAsync(customRequest.Data);
@@ -33,14 +34,11 @@ namespace jay.school.bussiness.Bussiness
             return new CustomResponse<Teacher>(1, teacher, null);
         }
 
-        public Task<CustomResponse<Teacher>> GetTeacherBySection(string section)
+        public async Task<CustomResponse<Teacher>> GetClassTeacher(string std, string section)
         {
-            throw new NotImplementedException();
-        }
+            Teacher teacher = await _teacher.FindAsync(e => ((e.isCTRClass == std) && (e.isCTRSection == section) && (e.isCTR))).Result.FirstOrDefaultAsync();
 
-        public Task<CustomResponse<List<Teacher>>> GetTeacherBySections(string section)
-        {
-            throw new NotImplementedException();
+            return new CustomResponse<Teacher>(1, teacher, null);
         }
 
         public async Task<CustomResponse<List<Teacher>>> GetTeachers()

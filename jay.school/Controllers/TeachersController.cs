@@ -30,12 +30,20 @@ namespace jay.school.Controllers
         {
             return await _teachersService.GetTeacher(id);
         }
+
         [Route("add")]
         [HttpPost]
         public async Task<ActionResult<CustomResponse<string>>> AddTeachers(CustomRequest<Teacher> request)
         {
             
             return await _teachersService.AddTeachers(request);
+        }
+
+        [Route("getClassTeacher")]
+        [HttpGet]
+        public async Task<ActionResult<CustomResponse<Teacher>>> GetClassTeacher(string std, string section)
+        {
+            return await _teachersService.GetClassTeacher(std,section);
         }
     }
 }
