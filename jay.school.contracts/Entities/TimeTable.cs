@@ -17,7 +17,7 @@ namespace jay.school.contracts.Entities
         public string Section { get; set; }
         public DateTime FromTime { get; set; }
         public DateTime EndTime { get; set; }
-        public String Week {get; set;}
+        public string Week {get; set;}
         public string Duration { get; set; }
         public string UploadedById { get; set; }
 
