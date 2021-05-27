@@ -93,7 +93,7 @@ namespace jay.school.bussiness.Bussiness
                 var found = await _subject.DeleteOneAsync(sub => ((subject.Id == sub.Id)));
 
 
-                return new CustomResponse<string>(1, null, subject.Subject + " deleted..");
+                return new CustomResponse<string>(1, subject.Subject + " deleted..", null);
 
             }
             catch (Exception e)
