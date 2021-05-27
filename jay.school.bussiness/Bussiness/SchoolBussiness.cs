@@ -63,14 +63,20 @@ namespace jay.school.bussiness.Bussiness
         {
             try
             {
-                SubjectsModel found = await _subject.FindAsync(sub => ((subject.Subject == sub.Subject) || (subject.SubjectCode == sub.SubjectCode))).Result.FirstAsync();
-
-                if(found != null){
+                SubjectsModel found = null;
+                try{
+                    found = await _subject.FindAsync(sub => ((subject.Subject == sub.Subject) || (subject.SubjectCode == sub.SubjectCode))).Result.FirstAsync();
+                    
                     return new CustomResponse<string>(0, null, found.Subject + " already exists");
+    
                 }
-                await _subject.InsertOneAsync(subject);
+                catch(Exception ex)
+                {
+                    await _subject.InsertOneAsync(subject);
 
-                return new CustomResponse<string>(1, "Added " + subject.Subject + " to Records", null);
+                    return new CustomResponse<string>(1, "Added " + subject.Subject + " to Records", null);
+                }
+            
             }
             catch (Exception e)
             {
