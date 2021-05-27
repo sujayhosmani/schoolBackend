@@ -71,5 +71,40 @@ namespace jay.school.Controllers
         {
             return await _schoolService.AddStudents(students.Data);
         }
+
+
+        [Route("addTimeTable")]
+        [HttpPost]
+        public async Task<CustomResponse<string>> AddTimeTables(CustomRequest<List<TimeTable>> timeTable)
+        {
+
+            return await _schoolService.AddTimeTables(timeTable.Data);
+        }
+
+        [Route("addSubjects")]
+        [HttpPost]
+        public async Task<CustomResponse<string>> AddSubjects(CustomRequest<List<SubjectsModel>> subjects)
+        {
+            
+            return await _schoolService.AddSubjects(subjects.Data);
+        }
+
+        [Route("getTimeTable")]
+        [HttpPost]
+        public async Task<CustomResponse<List<TimeTable>>> GetTimeTables(string from, string std, string section)
+        {
+            return await _schoolService.GetTimeTables(from, std, section);
+            
+        }
+
+        [Route("getSubjects")]
+        [HttpPost]
+        public async Task<CustomResponse<List<SubjectsModel>>> GetSubjects()
+        {
+            return await _schoolService.GetSubjects();
+            
+        }
+
+
     }
 }
