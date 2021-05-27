@@ -90,7 +90,7 @@ namespace jay.school.Controllers
         }
 
         [Route("getTimeTable")]
-        [HttpPost]
+        [HttpGet]
         public async Task<CustomResponse<List<TimeTable>>> GetTimeTables(string from, string std, string section)
         {
             return await _schoolService.GetTimeTables(from, std, section);
@@ -98,7 +98,7 @@ namespace jay.school.Controllers
         }
 
         [Route("getSubjects")]
-        [HttpPost]
+        [HttpGet]
         public async Task<CustomResponse<List<SubjectsModel>>> GetSubjects()
         {
             return await _schoolService.GetSubjects();
