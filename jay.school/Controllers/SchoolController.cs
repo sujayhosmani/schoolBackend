@@ -18,7 +18,7 @@ namespace jay.school.Controllers
         {
             _schoolService = schoolService;
         }
-// sample   2     7
+
 
         [Route("getByPh/{ph}")]
         [HttpGet]
@@ -81,7 +81,7 @@ namespace jay.school.Controllers
             return await _schoolService.AddTimeTables(timeTable.Data);
         }
 
-        [Route("addSubjects")]
+        [Route("addsubjects")]
         [HttpPost]
         public async Task<CustomResponse<string>> AddSubjects(CustomRequest<List<SubjectsModel>> subjects)
         {
