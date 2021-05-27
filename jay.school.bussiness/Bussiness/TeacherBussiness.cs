@@ -18,13 +18,13 @@ namespace jay.school.bussiness.Bussiness
             _teacherMDBContext = context;
             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
         }
-        
+
         public async Task<CustomResponse<string>> AddTeachers(CustomRequest<Teacher> customRequest)
         {
             await _teacher.InsertOneAsync(customRequest.Data);
 
             return new CustomResponse<string>(1, "Inserted Successfully", null);
-           
+
         }
 
         public async Task<CustomResponse<Teacher>> GetTeacher(string id)
@@ -36,14 +36,30 @@ namespace jay.school.bussiness.Bussiness
 
         public async Task<CustomResponse<Teacher>> GetClassTeacher(string std, string section)
         {
-            Teacher teacher = await _teacher.FindAsync(e => ((e.isCTRClass == std) && (e.isCTRSection == section) && (e.isCTR))).Result.FirstOrDefaultAsync();
+            try
+            {
+                Teacher teacher = await _teacher.FindAsync(e => ((e.isCTRClass == std) && (e.isCTRSection == section) && (e.isCTR))).Result.FirstOrDefaultAsync();
 
-            return new CustomResponse<Teacher>(1, teacher, null);
+                if (teacher != null)
+                {
+                    return new CustomResponse<Teacher>(1, teacher, null);
+                }
+                else
+                {
+                    return new CustomResponse<Teacher>(0, null, "not added");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<Teacher>(0, null, e.Message);
+            }
+
         }
 
         public async Task<CustomResponse<List<Teacher>>> GetTeachers()
         {
-          List<Teacher> teachers =   await _teacher.FindAsync(e => true).Result.ToListAsync();
+            List<Teacher> teachers = await _teacher.FindAsync(e => true).Result.ToListAsync();
 
             return new CustomResponse<List<Teacher>>(1, teachers, null);
         }
