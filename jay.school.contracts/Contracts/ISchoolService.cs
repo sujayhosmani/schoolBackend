@@ -17,6 +17,7 @@ namespace jay.school.contracts.Contracts
         Task<CustomResponse<List<SubjectsModel>>> GetSubjects();
         Task<CustomResponse<string>> AddStudents(List<Student> students);
         Task<CustomResponse<string>> AddTimeTables(List<TimeTable> timeTables);
-        Task<CustomResponse<string>> AddSubjects(SubjectsModel subject);
+        Task<CustomResponse<string>> AddSubject(SubjectsModel subject);
+        Task<CustomResponse<string>> DeleteSubject(SubjectsModel subject);
     }
 }

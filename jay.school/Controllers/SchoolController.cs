@@ -81,12 +81,12 @@ namespace jay.school.Controllers
             return await _schoolService.AddTimeTables(timeTable.Data);
         }
 
-        [Route("addsubjects")]
+        [Route("addSubject")]
         [HttpPost]
-        public async Task<CustomResponse<string>> AddSubjects(CustomRequest<SubjectsModel> subject)
+        public async Task<CustomResponse<string>> AddSubject(CustomRequest<SubjectsModel> subject)
         {
             
-            return await _schoolService.AddSubjects(subject.Data);
+            return await _schoolService.AddSubject(subject.Data);
         }
 
         [Route("getTimeTable")]
@@ -105,6 +105,13 @@ namespace jay.school.Controllers
             
         }
 
+        [Route("delSubject")]
+        [HttpPost]
+        public async Task<CustomResponse<string>> DeleteSubject(CustomRequest<SubjectsModel> subject)
+        {
+            
+            return await _schoolService.DeleteSubject(subject.Data);
+        }
 
     }
 }

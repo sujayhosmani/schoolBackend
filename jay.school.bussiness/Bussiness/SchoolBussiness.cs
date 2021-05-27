@@ -59,24 +59,25 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-        public async Task<CustomResponse<string>> AddSubjects(SubjectsModel subject)
+        public async Task<CustomResponse<string>> AddSubject(SubjectsModel subject)
         {
             try
             {
                 SubjectsModel found = null;
-                try{
+                try
+                {
                     found = await _subject.FindAsync(sub => ((subject.Subject == sub.Subject) || (subject.SubjectCode == sub.SubjectCode))).Result.FirstAsync();
-                    
+
                     return new CustomResponse<string>(0, null, found.Subject + " already exists");
-    
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     await _subject.InsertOneAsync(subject);
 
                     return new CustomResponse<string>(1, "Added " + subject.Subject + " to Records", null);
                 }
-            
+
             }
             catch (Exception e)
             {
@@ -84,12 +85,29 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+
+        public async Task<CustomResponse<string>> DeleteSubject(SubjectsModel subject)
+        {
+            try
+            {
+                var found = await _subject.DeleteOneAsync(sub => ((subject.Id == sub.Id)));
+
+
+                return new CustomResponse<string>(1, null, subject.Subject + " deleted..");
+
+            }
+            catch (Exception e)
+            {
+
+                return new CustomResponse<string>(0,  null, e.Message);
+            }
+        }
         public async Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec)
         {
             //TODO: add pagination later
             List<Student> stud = await _student.FindAsync(stu => stu.Class == cls && stu.Section == sec).Result.ToListAsync();
 
-            return new CustomResponse<List<Student>>(0, stud, null);
+            return new CustomResponse<List<Student>>(1, stud, null);
         }
         public async Task<CustomResponse<Student>> GetStudentsById(string id)
         {
@@ -97,7 +115,7 @@ namespace jay.school.bussiness.Bussiness
             {
                 Student stud = await _student.FindAsync(stu => stu.StudentId == id || stu.AdmissionNo == id).Result.FirstAsync();
 
-                return new CustomResponse<Student>(0, stud, null);
+                return new CustomResponse<Student>(1, stud, null);
             }
             catch (Exception e)
             {
@@ -109,7 +127,7 @@ namespace jay.school.bussiness.Bussiness
         {
             Student stud = await _student.FindAsync(stu => stu.FatherPh == ph || stu.MotherPh == ph).Result.FirstAsync();
 
-            return new CustomResponse<Student>(0, stud, null);
+            return new CustomResponse<Student>(1, stud, null);
         }
         public async Task<CustomResponse<List<Student>>> GetAllStudents()
         {
@@ -117,7 +135,7 @@ namespace jay.school.bussiness.Bussiness
             {
                 List<Student> stud = await _student.FindAsync(stu => true).Result.ToListAsync();
 
-                return new CustomResponse<List<Student>>(0, stud, null);
+                return new CustomResponse<List<Student>>(1, stud, null);
             }
             catch (Exception e)
             {
@@ -131,13 +149,16 @@ namespace jay.school.bussiness.Bussiness
             try
             {
                 List<TimeTable> timeTables;
-                if(from.Equals("all")){
-                   timeTables = await _timeTable.FindAsync(time => true).Result.ToListAsync();
-                }else{
+                if (from.Equals("all"))
+                {
+                    timeTables = await _timeTable.FindAsync(time => true).Result.ToListAsync();
+                }
+                else
+                {
                     timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
                 }
 
-                return new CustomResponse<List<TimeTable>>(0, timeTables, null);
+                return new CustomResponse<List<TimeTable>>(1, timeTables, null);
             }
             catch (Exception e)
             {
@@ -151,7 +172,7 @@ namespace jay.school.bussiness.Bussiness
             {
                 List<SubjectsModel> subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
 
-                return new CustomResponse<List<SubjectsModel>>(0, subjects, null);
+                return new CustomResponse<List<SubjectsModel>>(1, subjects, null);
             }
             catch (Exception e)
             {
