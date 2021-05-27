@@ -15,10 +15,6 @@ namespace jay.school.contracts.Entities
         public string SubjectCode { get; set; }
         public string Std { get; set; }
         public string Section { get; set; }
-        public string TeacherName { get; set; }
-        public string TeacherId { get; set; }
-        public string CTRName { get; set; }
-        public string CTRId { get; set; }
         public DateTime FromTime { get; set; }
         public DateTime EndTime { get; set; }
         public String Week {get; set;}
