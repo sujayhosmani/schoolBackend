@@ -23,6 +23,7 @@ namespace jay.school.bussiness.Bussiness
         public SchoolBussiness(IMDBContext schoolMDBContext)
         {
             _schoolMDBContext = schoolMDBContext;
+            _teacherMDBContext = schoolMDBContext;
             _student = _schoolMDBContext.GetCollection<Student>(typeof(Student).Name);
             _timeTable = _schoolMDBContext.GetCollection<TimeTable>(typeof(TimeTable).Name);
             _subject = _schoolMDBContext.GetCollection<SubjectsModel>(typeof(SubjectsModel).Name);
