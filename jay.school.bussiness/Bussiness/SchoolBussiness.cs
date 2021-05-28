@@ -199,7 +199,12 @@ namespace jay.school.bussiness.Bussiness
 
                 List<SubjectsModel> subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
 
-                List<Teacher> teachers = await _teacher.FindAsync(e => ctsModel.Any(f => f.TID == e.Id)).Result.ToListAsync();
+                List<Teacher> teachers = null;
+                foreach(var val in ctsModel){
+                    Teacher teacher = await _teacher.FindAsync(e => e.Id == val.TID).Result.FirstAsync();
+                    teachers.Add(teacher);
+                }
+                
 
                 FullTimeTable tab = new FullTimeTable{
                     ctsModel = ctsModel,
