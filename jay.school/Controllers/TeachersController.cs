@@ -24,6 +24,7 @@ namespace jay.school.Controllers
         {
             return await _teachersService.GetTeachers();
         }
+        
         [Route("teacher/{id}")]
         [HttpGet]
         public async Task<ActionResult<CustomResponse<Teacher>>> GetTeacher(string id)
@@ -44,6 +45,20 @@ namespace jay.school.Controllers
         public async Task<ActionResult<CustomResponse<Teacher>>> GetClassTeacher(string std, string section)
         {
             return await _teachersService.GetClassTeacher(std,section);
+        }
+
+        [Route("getCTS")]
+        [HttpGet]
+        public async Task<ActionResult<CustomResponse<List<CTSModel>>>> GetCTS(string std, string section)
+        {
+            return await _teachersService.GetCTS(std,section);
+        }
+
+        [Route("addCTS")]
+        [HttpGet]
+        public async Task<ActionResult<CustomResponse<string>>> AddCTS(CustomRequest<List<CTSModel>> ctsList)
+        {
+            return await _teachersService.AddCTS(ctsList);
         }
     }
 }

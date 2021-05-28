@@ -11,13 +11,15 @@ namespace jay.school.contracts.Entities
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; } // room id
-        public string SubjectCode { get; set; }
-        public string Subject { get; set; }
-        public string Std { get; set; }
         public string Section { get; set; }
-        public string TeacherName { get; set; }
-        public string TeacherId { get; set; }
-        public bool isCTR { get; set; } // class teacher
+        // public string SubjectCode { get; set; }
+        // public string Subject { get; set; }
+        public string Std { get; set; }
+        public string TID { get; set; }
+        public string SubjectId { get; set; }
+        // public string TeacherName { get; set; }
+        // public string TeacherId { get; set; }
+        // public bool isCTR { get; set; } // class teacher
 
     }
 
