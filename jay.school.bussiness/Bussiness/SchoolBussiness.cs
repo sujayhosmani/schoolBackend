@@ -195,7 +195,7 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(string from, string std, string section)
+        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(bool isTT, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
             try
             {
@@ -203,24 +203,34 @@ namespace jay.school.bussiness.Bussiness
                 List<SubjectsModel> subjects = new List<SubjectsModel>();
                 List<TimeTable> timeTables = new List<TimeTable>();
                 List<Teacher> teachers = new List<Teacher>();
-                try
+                if (isTT)
                 {
-                    timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+                    try
+                    {
+                        timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
 
                 }
-                catch (Exception e)
-                {
 
-                }
-                try
+                if (isCTS)
                 {
-                    ctsModel = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
-                }
-                catch (Exception e)
-                {
+                    try
+                    {
+                        ctsModel = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
+                    }
+                    catch (Exception e)
+                    {
 
+                    }
                 }
-                if (from == "na")
+
+
+                if (isSubject)
                 {
                     try
                     {
@@ -230,6 +240,10 @@ namespace jay.school.bussiness.Bussiness
                     {
 
                     }
+                }
+
+                if (isTeacher)
+                {
                     try
                     {
 
@@ -240,14 +254,7 @@ namespace jay.school.bussiness.Bussiness
                     {
 
                     }
-
                 }
-
-
-
-
-
-
 
                 FullTimeTable tab = new FullTimeTable
                 {
@@ -280,7 +287,7 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayClass(string from, string std, string section)
+        public async Task<CustomResponse<FullTimeTable>> GetTodayClass(string from, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
             try
             {
@@ -295,12 +302,15 @@ namespace jay.school.bussiness.Bussiness
                 for (int i = 0; i < tab.Count; i++)
                 {
                     List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
+
                     weekSubjects = tab[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower())).ToList();
+
                     tab[i].weekSub = weekSubjects;
 
                     if (from == "up")
                     {
                         DateTime tempDate = Convert.ToDateTime(tab[i].EndTime, culture);
+
                         if (tempDate >= DateTime.Now)
                         {
                             upTab.Add(tab[i]);
@@ -309,22 +319,27 @@ namespace jay.school.bussiness.Bussiness
 
                 }
 
+                FullTimeTable full = new FullTimeTable();
+
+                CustomResponse<FullTimeTable> res = await GetFullTimeTables(false, isCTS, isSubject, isTeacher, std, section);
+
+                full = res.Data;
+
                 if (from == "up")
                 {
-
-                    return new CustomResponse<List<TimeTable>>(1, upTab, null);
-
+                    full.timeTable = upTab;
                 }
                 else
                 {
-
-                    return new CustomResponse<List<TimeTable>>(1, tab, null);
+                    full.timeTable = tab;
                 }
+
+                return new CustomResponse<FullTimeTable>(1, full, null);
 
             }
             catch (Exception e)
             {
-                return new CustomResponse<List<TimeTable>>(0, null, e.Message);
+                return new CustomResponse<FullTimeTable>(0, null, e.Message);
             }
 
         }

@@ -115,9 +115,17 @@ namespace jay.school.Controllers
 
         [Route("getFullTimeTable")]
         [HttpGet]
-        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(string from, string std, string section)
+        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(bool isTT, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
-            return await _schoolService.GetFullTimeTables(from, std, section);
+            return await _schoolService.GetFullTimeTables(isTT, isCTS, isSubject, isTeacher, std, section);
+            
+        }
+
+        [Route("getTodayClass")]
+        [HttpGet]
+        public async Task<CustomResponse<FullTimeTable>> GetTodayClass(string from, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
+        {
+            return await _schoolService.GetTodayClass(from, isCTS, isSubject, isTeacher, std, section);
             
         }
 
