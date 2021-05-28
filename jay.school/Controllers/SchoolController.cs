@@ -113,5 +113,13 @@ namespace jay.school.Controllers
             return await _schoolService.DeleteSubject(subject.Data);
         }
 
+        [Route("getFullTimeTable")]
+        [HttpGet]
+        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(string from, string std, string section)
+        {
+            return await _schoolService.GetFullTimeTables(from, std, section);
+            
+        }
+
     }
 }

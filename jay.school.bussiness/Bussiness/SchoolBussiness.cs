@@ -14,15 +14,20 @@ namespace jay.school.bussiness.Bussiness
     {
         //
         private readonly IMDBContext _schoolMDBContext;
+        private readonly IMDBContext _teacherMDBContext;
         private readonly IMongoCollection<Student> _student;
         private readonly IMongoCollection<TimeTable> _timeTable;
         private readonly IMongoCollection<SubjectsModel> _subject;
+        private readonly IMongoCollection<Teacher> _teacher;
+        private readonly IMongoCollection<CTSModel> _cts;
         public SchoolBussiness(IMDBContext schoolMDBContext)
         {
             _schoolMDBContext = schoolMDBContext;
             _student = _schoolMDBContext.GetCollection<Student>(typeof(Student).Name);
             _timeTable = _schoolMDBContext.GetCollection<TimeTable>(typeof(TimeTable).Name);
             _subject = _schoolMDBContext.GetCollection<SubjectsModel>(typeof(SubjectsModel).Name);
+             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
+            _cts = _teacherMDBContext.GetCollection<CTSModel>(typeof(CTSModel).Name);
 
         }
         public async Task<CustomResponse<Student>> AddStudent(Student student)
@@ -179,6 +184,34 @@ namespace jay.school.bussiness.Bussiness
             catch (Exception e)
             {
                 return new CustomResponse<List<TimeTable>>(0, null, e.Message);
+            }
+
+        }
+
+         public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(string from, string std, string section)
+        {
+            try
+            {
+                List<TimeTable> timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+                
+                List<CTSModel> ctsModel = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
+
+                List<SubjectsModel> subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
+
+                List<Teacher> teachers = await _teacher.FindAsync(e => ctsModel.Any(f => f.TID == e.Id)).Result.ToListAsync();
+
+                FullTimeTable tab = new FullTimeTable{
+                    ctsModel = ctsModel,
+                    subjects = subjects,
+                    timeTable = timeTables,
+                    teacher = teachers
+                };
+                
+                return new CustomResponse<FullTimeTable>(1, tab, null);
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<FullTimeTable>(0, null, e.Message);
             }
 
         }

@@ -26,4 +26,11 @@ namespace jay.school.contracts.Entities
         public string CTSId { get; set; }
     }
 
+    public class FullTimeTable{
+        public List<TimeTable> timeTable { get; set; }
+        public List<CTSModel> ctsModel { get; set; }
+        public List<SubjectsModel> subjects { get; set; }
+        public List<Teacher> teacher { get; set; }
+    }
+
 }
