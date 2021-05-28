@@ -27,7 +27,7 @@ namespace jay.school.bussiness.Bussiness
             _student = _schoolMDBContext.GetCollection<Student>(typeof(Student).Name);
             _timeTable = _schoolMDBContext.GetCollection<TimeTable>(typeof(TimeTable).Name);
             _subject = _schoolMDBContext.GetCollection<SubjectsModel>(typeof(SubjectsModel).Name);
-             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
+            _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
             _cts = _teacherMDBContext.GetCollection<CTSModel>(typeof(CTSModel).Name);
 
         }
@@ -57,26 +57,31 @@ namespace jay.school.bussiness.Bussiness
             try
             {
                 var updateFields = timeTables.Where(e => e.Id != null).ToList();
-                
+
                 var addFields = timeTables.Where(e => e.Id == null).ToList();
-                
-                if(addFields.Count > 0){
+
+                if (addFields.Count > 0)
+                {
                     await _timeTable.InsertManyAsync(addFields);
                 }
-                
-                foreach(var list in updateFields){
-                if(list.Id != null){
-                    UpdateDefinition<TimeTable> updateDefinition = Builders<TimeTable>.Update.Set(x => x, list);
-                                                                                        //    .Set(x => x.Std,list.Std)
-                                                                                        //    .Set(x => x.SubjectId,list.SubjectId)
-                                                                                        //    .Set(x => x.TID ,list.TID);
-                    await _timeTable.ReplaceOneAsync(x => x.Id == list.Id, list); // replaces first match
+
+                foreach (var list in updateFields)
+                {
+                    if (list.Id != null)
+                    {
+                        UpdateDefinition<TimeTable> updateDefinition = Builders<TimeTable>.Update.Set(x => x, list);
+                        //    .Set(x => x.Std,list.Std)
+                        //    .Set(x => x.SubjectId,list.SubjectId)
+                        //    .Set(x => x.TID ,list.TID);
+                        await _timeTable.ReplaceOneAsync(x => x.Id == list.Id, list); // replaces first match
+                    }
                 }
-            }
 
                 return new CustomResponse<string>(1, "Inserted Successfully", null);
-            
-            }catch(Exception e){
+
+            }
+            catch (Exception e)
+            {
                 return new CustomResponse<string>(0, null, e.Message);
             }
 
@@ -121,7 +126,7 @@ namespace jay.school.bussiness.Bussiness
             catch (Exception e)
             {
 
-                return new CustomResponse<string>(0,  null, e.Message);
+                return new CustomResponse<string>(0, null, e.Message);
             }
         }
         public async Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec)
@@ -189,30 +194,69 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-         public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(string from, string std, string section)
+        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(string from, string std, string section)
         {
             try
             {
-                List<TimeTable> timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
-                
-                List<CTSModel> ctsModel = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
-
-                List<SubjectsModel> subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
-
+                List<CTSModel> ctsModel = new List<CTSModel>();
+                List<SubjectsModel> subjects = new  List<SubjectsModel>();
+                List<TimeTable> timeTables = new  List<TimeTable>();
                 List<Teacher> teachers = new List<Teacher>();
-                foreach(var val in ctsModel){
-                    Teacher teacher = await _teacher.FindAsync(e => e.Id == val.TID).Result.FirstAsync();
-                    teachers.Add(teacher);
-                }
-                
+                try
+                {
+                    timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
 
-                FullTimeTable tab = new FullTimeTable{
+                }
+                catch (Exception e)
+                {
+
+                }
+                try
+                {
+                    ctsModel = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
+                }
+                catch (Exception e)
+                {
+
+                }
+                try
+                {
+                    subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
+                }
+                catch (Exception e)
+                {
+
+                }
+                try
+                {
+                    
+
+                    foreach (var val in ctsModel)
+                    {
+                        Teacher teacher = await _teacher.FindAsync(e => e.Id == val.TID).Result.FirstAsync();
+                        teachers.Add(teacher);
+                    }
+
+                }
+                catch (Exception e)
+                {
+
+                }
+
+
+
+
+
+
+
+                FullTimeTable tab = new FullTimeTable
+                {
                     ctsModel = ctsModel,
                     subjects = subjects,
                     timeTable = timeTables,
                     teacher = teachers
                 };
-                
+
                 return new CustomResponse<FullTimeTable>(1, tab, null);
             }
             catch (Exception e)
