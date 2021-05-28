@@ -199,8 +199,8 @@ namespace jay.school.bussiness.Bussiness
             try
             {
                 List<CTSModel> ctsModel = new List<CTSModel>();
-                List<SubjectsModel> subjects = new  List<SubjectsModel>();
-                List<TimeTable> timeTables = new  List<TimeTable>();
+                List<SubjectsModel> subjects = new List<SubjectsModel>();
+                List<TimeTable> timeTables = new List<TimeTable>();
                 List<Teacher> teachers = new List<Teacher>();
                 try
                 {
@@ -229,13 +229,13 @@ namespace jay.school.bussiness.Bussiness
                 }
                 try
                 {
-                    
 
-                    foreach (var val in ctsModel)
-                    {
-                        Teacher teacher = await _teacher.FindAsync(e => (e.Id.ToLower().Trim() == val.TID.ToLower().Trim())).Result.FirstAsync();
-                        teachers.Add(teacher);
-                    }
+                    teachers = await _teacher.FindAsync(tea => true).Result.ToListAsync();
+                    // foreach (var val in ctsModel)
+                    // {
+                    //     Teacher teacher = await _teacher.FindAsync(e => (e.Id.ToLower().Trim() == val.TID.ToLower().Trim())).Result.FirstAsync();
+                    //     teachers.Add(teacher);
+                    // }
 
                 }
                 catch (Exception e)
