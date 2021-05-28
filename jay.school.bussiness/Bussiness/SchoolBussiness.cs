@@ -233,7 +233,7 @@ namespace jay.school.bussiness.Bussiness
 
                     foreach (var val in ctsModel)
                     {
-                        Teacher teacher = await _teacher.FindAsync(e => e.Id == val.TID).Result.FirstAsync();
+                        Teacher teacher = await _teacher.FindAsync(e => (e.Id.ToLower().Trim() == val.TID.ToLower().Trim())).Result.FirstAsync();
                         teachers.Add(teacher);
                     }
 
