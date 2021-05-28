@@ -217,7 +217,7 @@ namespace jay.school.bussiness.Bussiness
             }
             catch (Exception e)
             {
-                return new CustomResponse<FullTimeTable>(0, null, e.Message);
+                return new CustomResponse<FullTimeTable>(0, null, e.ToString());
             }
 
         }
