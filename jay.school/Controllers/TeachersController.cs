@@ -55,7 +55,7 @@ namespace jay.school.Controllers
         }
 
         [Route("addCTS")]
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<CustomResponse<string>>> AddCTS(CustomRequest<List<CTSModel>> ctsList)
         {
             return await _teachersService.AddCTS(ctsList);
