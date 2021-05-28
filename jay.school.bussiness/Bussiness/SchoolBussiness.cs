@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -219,27 +220,26 @@ namespace jay.school.bussiness.Bussiness
                 {
 
                 }
-                try
+                if (from == "na")
                 {
-                    subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
-                }
-                catch (Exception e)
-                {
+                    try
+                    {
+                        subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
+                    }
+                    catch (Exception e)
+                    {
 
-                }
-                try
-                {
+                    }
+                    try
+                    {
 
-                    teachers = await _teacher.FindAsync(tea => true).Result.ToListAsync();
-                    // foreach (var val in ctsModel)
-                    // {
-                    //     Teacher teacher = await _teacher.FindAsync(e => (e.Id.ToLower().Trim() == val.TID.ToLower().Trim())).Result.FirstAsync();
-                    //     teachers.Add(teacher);
-                    // }
+                        teachers = await _teacher.FindAsync(tea => true).Result.ToListAsync();
 
-                }
-                catch (Exception e)
-                {
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
 
                 }
 
@@ -276,6 +276,55 @@ namespace jay.school.bussiness.Bussiness
             catch (Exception e)
             {
                 return new CustomResponse<List<SubjectsModel>>(0, null, e.Message);
+            }
+
+        }
+
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayClass(string from, string std, string section)
+        {
+            try
+            {
+                CultureInfo culture = new CultureInfo("en-US");
+
+                var today = DateTime.Today.DayOfWeek;
+
+                List<TimeTable> upTab = new List<TimeTable>();
+
+                List<TimeTable> tab = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+
+                for (int i = 0; i < tab.Count; i++)
+                {
+                    List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
+                    weekSubjects = tab[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower())).ToList();
+                    tab[i].weekSub = weekSubjects;
+
+                    if (from == "up")
+                    {
+                        DateTime tempDate = Convert.ToDateTime(tab[i].EndTime, culture);
+                        if (tempDate >= DateTime.Now)
+                        {
+                            upTab.Add(tab[i]);
+                        }
+                    }
+
+                }
+
+                if (from == "up")
+                {
+
+                    return new CustomResponse<List<TimeTable>>(1, upTab, null);
+
+                }
+                else
+                {
+
+                    return new CustomResponse<List<TimeTable>>(1, tab, null);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<TimeTable>>(0, null, e.Message);
             }
 
         }
