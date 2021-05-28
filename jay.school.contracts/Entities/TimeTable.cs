@@ -11,16 +11,19 @@ namespace jay.school.contracts.Entities
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
-        public string Subject { get; set; }
-        public string SubjectCode { get; set; }
         public string Std { get; set; }
         public string Section { get; set; }
+        public List<WeekSubjects> weekSub { get; set; }
         public DateTime FromTime { get; set; }
         public DateTime EndTime { get; set; }
-        public string Week {get; set;}
         public string Duration { get; set; }
         public string UploadedById { get; set; }
 
+    }
+
+    public class WeekSubjects{
+        public string Week { get; set; }
+        public string CTSId { get; set; }
     }
 
 }

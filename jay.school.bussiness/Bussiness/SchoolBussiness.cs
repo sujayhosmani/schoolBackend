@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace jay.school.bussiness.Bussiness
@@ -49,12 +50,27 @@ namespace jay.school.bussiness.Bussiness
         {
             try
             {
-                await _timeTable.InsertManyAsync(timeTables);
-
-                return new CustomResponse<string>(1, "Added " + timeTables.ToString() + " Records", null);
+                var updateFields = timeTables.Where(e => e.Id != null).ToList();
+                
+                var addFields = timeTables.Where(e => e.Id == null).ToList();
+                
+                if(addFields.Count > 0){
+                    await _timeTable.InsertManyAsync(addFields);
+                }
+                
+                foreach(var list in updateFields){
+                if(list.Id != null){
+                    UpdateDefinition<TimeTable> updateDefinition = Builders<TimeTable>.Update.Set(x => x, list);
+                                                                                        //    .Set(x => x.Std,list.Std)
+                                                                                        //    .Set(x => x.SubjectId,list.SubjectId)
+                                                                                        //    .Set(x => x.TID ,list.TID);
+                    await _timeTable.ReplaceOneAsync(x => x.Id == list.Id, list); // replaces first match
+                }
             }
-            catch (Exception e)
-            {
+
+                return new CustomResponse<string>(1, "Inserted Successfully", null);
+            
+            }catch(Exception e){
                 return new CustomResponse<string>(0, null, e.Message);
             }
 
