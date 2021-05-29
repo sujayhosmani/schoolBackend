@@ -373,6 +373,8 @@ namespace jay.school.bussiness.Bussiness
                 {
                     List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
 
+                    weekSubjects.Clear();
+
                     weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == tid.ToLower())).ToList();
 
                     if (weekSubjects.Count > 0)
@@ -380,7 +382,9 @@ namespace jay.school.bussiness.Bussiness
                         
                         fullTimeTable[i].weekSub.Clear();
 
-                        // fullTimeTable[i].weekSub = weekSubjects;
+                        fullTimeTable[i].weekSub = new List<WeekSubjects>();
+
+                        fullTimeTable[i].weekSub = weekSubjects;
 
                         newTimeTable.Add(fullTimeTable[i]);
 
