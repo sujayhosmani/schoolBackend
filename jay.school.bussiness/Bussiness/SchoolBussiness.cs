@@ -310,6 +310,8 @@ namespace jay.school.bussiness.Bussiness
                     if (weekSubjects.Count > 0)
                     {
 
+                        fullTimeTable[i].weekSub = weekSubjects;
+                        
                         newTimeTable.Add(fullTimeTable[i]);
 
                         if (from == "up")
@@ -374,6 +376,8 @@ namespace jay.school.bussiness.Bussiness
 
                     if (weekSubjects.Count > 0)
                     {
+                        
+                        fullTimeTable[i].weekSub = weekSubjects;
 
                         newTimeTable.Add(fullTimeTable[i]);
 
