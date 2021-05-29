@@ -295,27 +295,35 @@ namespace jay.school.bussiness.Bussiness
 
                 var today = DateTime.Today.DayOfWeek;
 
-                List<TimeTable> upTab = new List<TimeTable>();
+                List<TimeTable> upcomingTimeTable = new List<TimeTable>();
 
-                List<TimeTable> tab = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+                List<TimeTable> newTimeTable = new List<TimeTable>();
 
-                for (int i = 0; i < tab.Count; i++)
+                List<TimeTable> fullTimeTable = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+
+                for (int i = 0; i < fullTimeTable.Count; i++)
                 {
                     List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
 
-                    weekSubjects = tab[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower())).ToList();
+                    weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower())).ToList();
 
-                    tab[i].weekSub = weekSubjects;
-
-                    if (from == "up")
+                    if (weekSubjects.Count > 0)
                     {
-                        DateTime tempDate = Convert.ToDateTime(tab[i].EndTime, culture);
 
-                        if (tempDate >= DateTime.Now)
+                        newTimeTable.Add(fullTimeTable[i]);
+
+                        if (from == "up")
                         {
-                            upTab.Add(tab[i]);
+                            DateTime tempDate = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
+
+                            if (tempDate >= DateTime.Now)
+                            {
+                                upcomingTimeTable.Add(fullTimeTable[i]);
+                            }
                         }
                     }
+
+
 
                 }
 
@@ -327,11 +335,11 @@ namespace jay.school.bussiness.Bussiness
 
                 if (from == "up")
                 {
-                    full.timeTable = upTab;
+                    full.timeTable = upcomingTimeTable;
                 }
                 else
                 {
-                    full.timeTable = tab;
+                    full.timeTable = fullTimeTable;
                 }
 
                 return new CustomResponse<FullTimeTable>(1, full, null);
@@ -352,40 +360,48 @@ namespace jay.school.bussiness.Bussiness
 
                 var today = DateTime.Today.DayOfWeek;
 
-                List<TimeTable> upTab = new List<TimeTable>();
+                List<TimeTable> upcomingTimeTable = new List<TimeTable>();
 
-                List<TimeTable> tab = await _timeTable.FindAsync(time => true).Result.ToListAsync();
+                List<TimeTable> newTimeTable = new List<TimeTable>();
 
-                for (int i = 0; i < tab.Count; i++)
+                List<TimeTable> fullTimeTable = await _timeTable.FindAsync(time => true).Result.ToListAsync();
+
+                for (int i = 0; i < fullTimeTable.Count; i++)
                 {
                     List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
 
-                    weekSubjects = tab[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId == tid)).ToList();
+                    weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId == tid)).ToList();
 
-                    tab[i].weekSub = weekSubjects;
-
-                    if (from == "up")
+                    if (weekSubjects.Count > 0)
                     {
-                        DateTime tempDate = Convert.ToDateTime(tab[i].EndTime, culture);
 
-                        if (tempDate >= DateTime.Now)
+                        newTimeTable.Add(fullTimeTable[i]);
+
+                        if (from == "up")
                         {
-                            upTab.Add(tab[i]);
+                            DateTime tempDate = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
+
+                            if (tempDate >= DateTime.Now)
+                            {
+                                upcomingTimeTable.Add(fullTimeTable[i]);
+                            }
                         }
                     }
+
+
 
                 }
 
                 if (from == "up")
                 {
-                    return new CustomResponse<List<TimeTable>>(1, upTab, null);
+                    return new CustomResponse<List<TimeTable>>(1, upcomingTimeTable, null);
                 }
                 else
                 {
-                    return new CustomResponse<List<TimeTable>>(1, tab, null);
+                    return new CustomResponse<List<TimeTable>>(1, fullTimeTable, null);
                 }
 
-                
+
 
             }
             catch (Exception e)
@@ -394,7 +410,7 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-    
-    
+
+
     }
 }
