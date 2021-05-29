@@ -342,7 +342,7 @@ namespace jay.school.bussiness.Bussiness
                 }
                 else
                 {
-                    full.timeTable = fullTimeTable;
+                    full.timeTable = newTimeTable;
                 }
 
                 return new CustomResponse<FullTimeTable>(1, full, null);
