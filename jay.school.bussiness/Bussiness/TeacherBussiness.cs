@@ -41,7 +41,13 @@ namespace jay.school.bussiness.Bussiness
         {
             Teacher teacher = await _teacher.FindAsync(e => e.TeacherPh == ph).Result.FirstOrDefaultAsync();
 
-            return new CustomResponse<Teacher>(1, teacher, null);
+            if (teacher != null)
+            {
+                return new CustomResponse<Teacher>(1, teacher, null);
+            }else{
+                return new CustomResponse<Teacher>(0, null, "Teacher does not exists");
+            }
+
         }
 
         public async Task<CustomResponse<Teacher>> GetClassTeacher(string std, string section)
@@ -93,36 +99,41 @@ namespace jay.school.bussiness.Bussiness
         public async Task<CustomResponse<string>> AddCTS(CustomRequest<List<CTSModel>> ctsList)
         {
 
-            
+
 
             try
             {
                 var updateFields = ctsList.Data.Where(e => e.Id != null).ToList();
-                
+
                 var addFields = ctsList.Data.Where(e => e.Id == null).ToList();
-                
-                if(addFields.Count > 0){
+
+                if (addFields.Count > 0)
+                {
                     await _cts.InsertManyAsync(addFields);
                 }
-                
-                foreach(var list in updateFields){
-                if(list.Id != null){
-                    UpdateDefinition<CTSModel> updateDefinition = Builders<CTSModel>.Update.Set(x => x, list);
-                                                                                        //    .Set(x => x.Std,list.Std)
-                                                                                        //    .Set(x => x.SubjectId,list.SubjectId)
-                                                                                        //    .Set(x => x.TID ,list.TID);
-                    await _cts.ReplaceOneAsync(x => x.Id == list.Id, list); // replaces first match
+
+                foreach (var list in updateFields)
+                {
+                    if (list.Id != null)
+                    {
+                        UpdateDefinition<CTSModel> updateDefinition = Builders<CTSModel>.Update.Set(x => x, list);
+                        //    .Set(x => x.Std,list.Std)
+                        //    .Set(x => x.SubjectId,list.SubjectId)
+                        //    .Set(x => x.TID ,list.TID);
+                        await _cts.ReplaceOneAsync(x => x.Id == list.Id, list); // replaces first match
+                    }
                 }
-            }
 
                 return new CustomResponse<string>(1, "Inserted Successfully", null);
-            
-            }catch(Exception e){
+
+            }
+            catch (Exception e)
+            {
                 return new CustomResponse<string>(0, null, e.Message);
             }
 
 
-            
+
 
 
 
