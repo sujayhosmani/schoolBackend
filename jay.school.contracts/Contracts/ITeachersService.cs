@@ -10,6 +10,7 @@ namespace jay.school.contracts.Contracts
     {
         Task<CustomResponse<List<Teacher>>> GetTeachers();
         Task<CustomResponse<Teacher>> GetTeacher(string id);
+        Task<CustomResponse<Teacher>> GetTeacherByPh(string ph);
         Task<CustomResponse<Teacher>> GetClassTeacher(string std, string section);
         Task<CustomResponse<List<CTSModel>>> GetCTS(string std, string section);
         Task<CustomResponse<string>> AddTeachers(CustomRequest<Teacher> customRequest);

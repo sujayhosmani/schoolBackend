@@ -37,6 +37,13 @@ namespace jay.school.bussiness.Bussiness
             return new CustomResponse<Teacher>(1, teacher, null);
         }
 
+        public async Task<CustomResponse<Teacher>> GetTeacherByPh(string ph)
+        {
+            Teacher teacher = await _teacher.FindAsync(e => e.TeacherPh == ph).Result.FirstOrDefaultAsync();
+
+            return new CustomResponse<Teacher>(1, teacher, null);
+        }
+
         public async Task<CustomResponse<Teacher>> GetClassTeacher(string std, string section)
         {
             try

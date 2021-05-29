@@ -18,6 +18,8 @@ namespace jay.school.Controllers
         {
             _teachersService = teachersService;
         }
+        
+        
         [Route("teachers")]
         [HttpGet]
         public async Task<ActionResult<CustomResponse<List<Teacher>>>> GetTeachers()
@@ -30,6 +32,13 @@ namespace jay.school.Controllers
         public async Task<ActionResult<CustomResponse<Teacher>>> GetTeacher(string id)
         {
             return await _teachersService.GetTeacher(id);
+        }
+
+        [Route("teacherByPh/{ph}")]
+        [HttpGet]
+        public async Task<ActionResult<CustomResponse<Teacher>>> GetTeacherByPh(string ph)
+        {
+            return await _teachersService.GetTeacherByPh(ph);
         }
 
         [Route("add")]
