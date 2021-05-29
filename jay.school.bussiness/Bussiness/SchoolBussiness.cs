@@ -357,7 +357,7 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable2(string from, string tid)
         {
             try
             {
@@ -421,7 +421,7 @@ namespace jay.school.bussiness.Bussiness
         }
 
 
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable2(string from, string tid)
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
         {
             try
             {
