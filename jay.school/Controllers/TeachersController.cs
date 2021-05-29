@@ -38,7 +38,7 @@ namespace jay.school.Controllers
         [HttpGet]
         public async Task<ActionResult<CustomResponse<Teacher>>> GetTeacherByPh(string ph)
         {
-            return await _teachersService.GetTeacherByPh(ph);
+             return await _teachersService.GetTeacherByPh(ph);
         }
 
         [Route("add")]
