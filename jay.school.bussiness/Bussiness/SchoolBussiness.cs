@@ -343,5 +343,58 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
+        {
+            try
+            {
+                CultureInfo culture = new CultureInfo("en-US");
+
+                var today = DateTime.Today.DayOfWeek;
+
+                List<TimeTable> upTab = new List<TimeTable>();
+
+                List<TimeTable> tab = await _timeTable.FindAsync(time => true).Result.ToListAsync();
+
+                for (int i = 0; i < tab.Count; i++)
+                {
+                    List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
+
+                    weekSubjects = tab[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId == tid)).ToList();
+
+                    tab[i].weekSub = weekSubjects;
+
+                    if (from == "up")
+                    {
+                        DateTime tempDate = Convert.ToDateTime(tab[i].EndTime, culture);
+
+                        if (tempDate >= DateTime.Now)
+                        {
+                            upTab.Add(tab[i]);
+                        }
+                    }
+
+                }
+
+                if (from == "up")
+                {
+                    return new CustomResponse<List<TimeTable>>(1, upTab, null);
+                }
+                else
+                {
+                    return new CustomResponse<List<TimeTable>>(1, tab, null);
+                }
+
+                
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<TimeTable>>(0, null, e.Message);
+            }
+
+        }
+    
+    
     }
 }

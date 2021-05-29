@@ -129,5 +129,13 @@ namespace jay.school.Controllers
             
         }
 
+        [Route("getTodayTeacherTimeTable")]
+        [HttpGet]
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid){
+            
+            return await _schoolService.GetTodayTeacherTimeTable(from, tid);
+        
+        }
+
     }
 }

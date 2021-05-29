@@ -13,6 +13,7 @@ namespace jay.school.contracts.Contracts
         Task<CustomResponse<Student>> GetStudentsById(string id);
         Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec);
         Task<CustomResponse<List<Student>>> GetAllStudents();
+        Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid);
         Task<CustomResponse<List<TimeTable>>> GetTimeTables(string from, string std, string section);
         Task<CustomResponse<FullTimeTable>> GetFullTimeTables(bool isTT, bool isCTS, bool isSubject, bool isTeacher, string std, string section);
         Task<CustomResponse<FullTimeTable>> GetTodayClass(string from, bool isCTS, bool isSubject, bool isTeacher, string std, string section);
