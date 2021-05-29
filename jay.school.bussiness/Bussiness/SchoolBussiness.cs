@@ -380,7 +380,7 @@ namespace jay.school.bussiness.Bussiness
                         
                         fullTimeTable[i].weekSub.Clear();
 
-                        fullTimeTable[i].weekSub = weekSubjects;
+                        // fullTimeTable[i].weekSub = weekSubjects;
 
                         newTimeTable.Add(fullTimeTable[i]);
 
