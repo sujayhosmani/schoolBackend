@@ -5,6 +5,8 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MongoDB.Driver;
+using MongoDB.Bson;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -417,6 +419,51 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+
+
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable2(string from, string tid)
+        {
+            try
+            {
+                CultureInfo culture = new CultureInfo("en-US");
+
+                var today = DateTime.Today.DayOfWeek;
+
+                List<TimeTable> upcomingTimeTable = new List<TimeTable>();
+
+                List<TimeTable> newTimeTable = new List<TimeTable>();
+
+                List<CTSModel> tidCTS = await _cts.FindAsync(e => e.TID == tid).Result.ToListAsync();
+                
+                var builder = Builders<TimeTable>.Filter;
+                var weekSubBuilder = Builders<WeekSubjects>.Filter;
+                
+                
+                var filter1 = weekSubBuilder.Eq("Week", today.ToString()) & weekSubBuilder.Eq("CTSId", tid);
+                var filter = builder.ElemMatch(p => p.weekSub, filter1);
+
+                List<TimeTable> fullTimeTable = _timeTable.Find(filter).ToList();
+
+
+                if (from == "up")
+                {
+                    return new CustomResponse<List<TimeTable>>(1, fullTimeTable, null);
+                }
+                else
+                {
+                    return new CustomResponse<List<TimeTable>>(1, fullTimeTable, null);
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<TimeTable>>(0, null, e.Message);
+            }
+
+        }
+
 
 
     }
