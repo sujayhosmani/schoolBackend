@@ -28,6 +28,8 @@ namespace jay.school.contracts.Entities
         public string ActualStartTime { get; set; }
         public string ActualEndTime { get; set; }
         public string Duration { get; set; }
+        public string CTSId { get; set; }
+        public string Week { get; set; }
 
     }
 

@@ -421,27 +421,34 @@ namespace jay.school.bussiness.Bussiness
                                     if (CurrentTime < StartTime)
                                     {
                                         fullTimeTable[i].weekSub[w].Status = "Waiting";
+                                        fullTimeTable[i].weekSub[w].StatusCode = 3;
                                     }
                                     else if (CurrentTime >= StartTime && CurrentTime <= EndTime)
                                     {
                                         if (oc.Status == 1)
                                         {
                                             fullTimeTable[i].weekSub[w].Status = "Resume";
+                                            fullTimeTable[i].weekSub[w].StatusCode = 1;
                                             fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
                                         }
                                         else
                                         {
                                             fullTimeTable[i].weekSub[w].Status = "Start";
+                                            fullTimeTable[i].weekSub[w].StatusCode = 2;
                                         }
-                                    }else{
+                                    }
+                                    else
+                                    {
                                         if (oc.Status == 1)
                                         {
                                             fullTimeTable[i].weekSub[w].Status = oc.Data.Status;
+                                            fullTimeTable[i].weekSub[w].StatusCode = 5;
                                             fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
                                         }
                                         else
                                         {
                                             fullTimeTable[i].weekSub[w].Status = "Skipped";
+                                            fullTimeTable[i].weekSub[w].StatusCode = 4;
                                         }
                                     }
 
@@ -521,9 +528,47 @@ namespace jay.school.bussiness.Bussiness
 
         public async Task<CustomResponse<OnlineClass>> AddOnlineClass(OnlineClass onlineClass)
         {
-            await _onlineClass.InsertOneAsync(onlineClass);
+            if (onlineClass.Id == null)
+            {
 
-            return new CustomResponse<OnlineClass>(1, onlineClass, null);
+                var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+
+                var uniqId = todayDate + onlineClass.Std + onlineClass.Section + onlineClass.ActualStartTime
+                                        + onlineClass.ActualEndTime + onlineClass.CTSId + onlineClass.Week;
+
+                
+                CultureInfo culture = new CultureInfo("en-US");
+                var StartTime = Convert.ToDateTime(onlineClass.ActualStartTime, culture);
+                var EndTime = Convert.ToDateTime(onlineClass.ActualEndTime, culture);
+                if (DateTime.Now >= StartTime && DateTime.Now <= EndTime)
+                {
+                    var found = await _onlineClass.FindAsync(e => e.UniqueId == uniqId && e.CurrentDate == todayDate).Result.ToListAsync();
+                    if (found.Count > 0)
+                    {
+                        return new CustomResponse<OnlineClass>(1, found[0], null);
+                    }
+                    else
+                    {
+                        onlineClass.UniqueId = uniqId;
+                        onlineClass.CurrentDate = todayDate;
+                        onlineClass.Status = "Started";
+                        onlineClass.StartTime = DateTime.Now.ToString();
+
+                        await _onlineClass.InsertOneAsync(onlineClass);
+
+                        return new CustomResponse<OnlineClass>(1, onlineClass, null);
+                    }
+
+                }else{
+                    return new CustomResponse<OnlineClass>(0, null, "Time Exceeded");
+                }
+
+            }
+            else
+            {
+                return new CustomResponse<OnlineClass>(0, null, "Id Exists");
+            }
+
 
         }
 

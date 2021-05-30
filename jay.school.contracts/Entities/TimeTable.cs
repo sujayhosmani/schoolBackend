@@ -27,6 +27,7 @@ namespace jay.school.contracts.Entities
         public string TId { get; set; }
         public string SubjectId { get; set; }
         public string Status { get; set; }
+        public int StatusCode { get; set; }
         public string OnlineClassId { get; set; }
     }
 
