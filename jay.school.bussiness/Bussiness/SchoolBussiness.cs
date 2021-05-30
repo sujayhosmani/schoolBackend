@@ -519,6 +519,14 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
+        public async Task<CustomResponse<OnlineClass>> AddOnlineClass(OnlineClass onlineClass)
+        {
+            await _onlineClass.InsertOneAsync(onlineClass);
+
+            return new CustomResponse<OnlineClass>(1, onlineClass, null);
+
+        }
+
 
     }
 }

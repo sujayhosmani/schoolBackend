@@ -65,6 +65,15 @@ namespace jay.school.Controllers
 
         }
 
+
+        [Route("addOnlineClass")]
+        [HttpPost]
+        public async Task<CustomResponse<OnlineClass>> AddOnlineClass(CustomRequest<OnlineClass> onlineClass){
+            
+            return await _schoolService.AddOnlineClass(onlineClass.Data);
+
+        }
+        
         [Route("bulkAdd")]
         [HttpPost]
         public async Task<CustomResponse<string>> AddStudents(CustomRequest<List<Student>> students)
