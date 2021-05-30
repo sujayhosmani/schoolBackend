@@ -364,7 +364,7 @@ namespace jay.school.bussiness.Bussiness
             {
                 CultureInfo culture = new CultureInfo("en-US");
 
-                var today = DateTime.Today.DayOfWeek;
+                var today = "Saturday";//DateTime.Today.DayOfWeek;
 
                 List<TimeTable> upcomingTimeTable = new List<TimeTable>();
 
