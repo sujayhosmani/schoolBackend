@@ -23,6 +23,7 @@ namespace jay.school.bussiness.Bussiness
         private readonly IMongoCollection<SubjectsModel> _subject;
         private readonly IMongoCollection<Teacher> _teacher;
         private readonly IMongoCollection<CTSModel> _cts;
+        private readonly IMongoCollection<OnlineClass> _onlineClass;
         public SchoolBussiness(IMDBContext schoolMDBContext)
         {
             _schoolMDBContext = schoolMDBContext;
@@ -32,6 +33,7 @@ namespace jay.school.bussiness.Bussiness
             _subject = _schoolMDBContext.GetCollection<SubjectsModel>(typeof(SubjectsModel).Name);
             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
             _cts = _teacherMDBContext.GetCollection<CTSModel>(typeof(CTSModel).Name);
+            _onlineClass = _teacherMDBContext.GetCollection<OnlineClass>(typeof(OnlineClass).Name);
 
         }
         public async Task<CustomResponse<Student>> AddStudent(Student student)
@@ -115,7 +117,6 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-
         public async Task<CustomResponse<string>> DeleteSubject(SubjectsModel subject)
         {
             try
@@ -174,6 +175,25 @@ namespace jay.school.bussiness.Bussiness
             //TODO: add pagination later
 
         }
+        public async Task<CustomResponse<List<SubjectsModel>>> GetSubjects()
+        {
+            try
+            {
+                List<SubjectsModel> subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
+
+                return new CustomResponse<List<SubjectsModel>>(1, subjects, null);
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<SubjectsModel>>(0, null, e.Message);
+            }
+
+        }
+
+
+
+
+
         public async Task<CustomResponse<List<TimeTable>>> GetTimeTables(string from, string std, string section)
         {
             try
@@ -196,7 +216,6 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-
         public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(bool isTT, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
             try
@@ -274,21 +293,6 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-        public async Task<CustomResponse<List<SubjectsModel>>> GetSubjects()
-        {
-            try
-            {
-                List<SubjectsModel> subjects = await _subject.FindAsync(stu => true).Result.ToListAsync();
-
-                return new CustomResponse<List<SubjectsModel>>(1, subjects, null);
-            }
-            catch (Exception e)
-            {
-                return new CustomResponse<List<SubjectsModel>>(0, null, e.Message);
-            }
-
-        }
-
         public async Task<CustomResponse<FullTimeTable>> GetTodayClass(string from, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
             try
@@ -356,8 +360,6 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-
-
         public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
         {
             try
@@ -385,15 +387,68 @@ namespace jay.school.bussiness.Bussiness
 
                             List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
 
-                            weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == cts.Id.ToLower())).Select(
-                                f => new WeekSubjects
+                            // weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == cts.Id.ToLower())).Select(
+                            //     f => new WeekSubjects
+                            //     {
+                            //         CTSId = f.CTSId,
+                            //         SubjectId = cts.SubjectId,
+                            //         TId = cts.TID,
+                            //         Week = f.Week
+                            //     }
+                            //     ).ToList();
+
+
+                            for (int w = 0; w < fullTimeTable[i].weekSub.Count; w++)
+                            {
+                                if (fullTimeTable[i].weekSub[w].Week == today.ToString() && fullTimeTable[i].weekSub[w].CTSId == cts.Id)
                                 {
-                                    CTSId = f.CTSId,
-                                    SubjectId = cts.SubjectId,
-                                    TId = cts.TID,
-                                    Week = f.Week
+                                    fullTimeTable[i].weekSub[w].TId = cts.TID;
+                                    fullTimeTable[i].weekSub[w].SubjectId = cts.SubjectId;
+
+                                    var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+
+                                    var CurrentTime = DateTime.Now;
+
+                                    var StartTime = Convert.ToDateTime(fullTimeTable[i].FromTime, culture);
+                                    var EndTime = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
+
+                                    var uniqId = todayDate + fullTimeTable[i].Std + fullTimeTable[i].Section + fullTimeTable[i].FromTime
+                                    + fullTimeTable[i].EndTime + fullTimeTable[i].weekSub[w].CTSId + fullTimeTable[i].weekSub[w].Week;
+
+                                    CustomResponse<OnlineClass> oc = await getOnlineClassByUniqId(uniqId);
+
+
+                                    if (CurrentTime < StartTime)
+                                    {
+                                        fullTimeTable[i].weekSub[w].Status = "Waiting";
+                                    }
+                                    else if (CurrentTime >= StartTime && CurrentTime <= EndTime)
+                                    {
+                                        if (oc.Status == 1)
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "Resume";
+                                            fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
+                                        }
+                                        else
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "Start";
+                                        }
+                                    }else{
+                                        if (oc.Status == 1)
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = oc.Data.Status;
+                                            fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
+                                        }
+                                        else
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "Skipped";
+                                        }
+                                    }
+
+                                    weekSubjects.Add(fullTimeTable[i].weekSub[w]);
+
                                 }
-                                ).ToList();
+                            }
 
                             if (weekSubjects.Count > 0)
                             {
@@ -439,6 +494,30 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
+
+        public async Task<CustomResponse<OnlineClass>> getOnlineClassByUniqId(string uniqId)
+        {
+
+            try
+            {
+                var onlineClss = await _onlineClass.FindAsync(e => e.UniqueId == uniqId).Result.FirstAsync();
+
+                if (onlineClss != null)
+                {
+                    return new CustomResponse<OnlineClass>(1, onlineClss, null);
+                }
+                else
+                {
+                    return new CustomResponse<OnlineClass>(0, null, "no data");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<OnlineClass>(0, null, e.Message);
+            }
+
+        }
 
 
     }

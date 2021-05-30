@@ -11,8 +11,9 @@ namespace jay.school.contracts.Entities
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; } // room id
+        public string UniqueId {get; set;}
         public string CurrentDate { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
         public string Subject { get; set; }
         public string SubjectCode { get; set; }
         public string SubjectId { get; set; }
@@ -24,6 +25,8 @@ namespace jay.school.contracts.Entities
         public string TeacherId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
+        public string ActualStartTime { get; set; }
+        public string ActualEndTime { get; set; }
         public string Duration { get; set; }
 
     }
