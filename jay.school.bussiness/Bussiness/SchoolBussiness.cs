@@ -441,7 +441,12 @@ namespace jay.school.bussiness.Bussiness
                                     {
                                         if (oc.Status == 1)
                                         {
-                                            fullTimeTable[i].weekSub[w].Status = oc.Data.Status;
+                                            if(oc.Data.Status == "Started"){
+                                                fullTimeTable[i].weekSub[w].Status = "NA Ended";
+                                            }else{
+                                                fullTimeTable[i].weekSub[w].Status = "Ended";
+                                            }
+                                            
                                             fullTimeTable[i].weekSub[w].StatusCode = 5;
                                             fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
                                         }
