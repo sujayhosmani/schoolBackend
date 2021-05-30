@@ -357,69 +357,6 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable2(string from, string tid)
-        {
-            try
-            {
-                CultureInfo culture = new CultureInfo("en-US");
-
-                var today = DateTime.Today.DayOfWeek;
-
-                List<TimeTable> upcomingTimeTable = new List<TimeTable>();
-
-                List<TimeTable> newTimeTable = new List<TimeTable>();
-
-                List<TimeTable> fullTimeTable = await _timeTable.FindAsync(time => true).Result.ToListAsync();
-
-                for (int i = 0; i < fullTimeTable.Count; i++)
-                {
-                    List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
-
-                    weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == tid.ToLower())).ToList();
-
-                    if (weekSubjects.Count > 0)
-                    {
-                        
-                        fullTimeTable[i].weekSub.Clear();
-
-                        fullTimeTable[i].weekSub = weekSubjects;
-
-                        newTimeTable.Add(fullTimeTable[i]);
-
-                        if (from == "up")
-                        {
-                            DateTime tempDate = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
-
-                            if (tempDate >= DateTime.Now)
-                            {
-                                upcomingTimeTable.Add(fullTimeTable[i]);
-                            }
-                        }
-                    }
-
-
-
-                }
-
-                if (from == "up")
-                {
-                    return new CustomResponse<List<TimeTable>>(1, upcomingTimeTable, null);
-                }
-                else
-                {
-                    return new CustomResponse<List<TimeTable>>(1, newTimeTable, null);
-                }
-
-
-
-            }
-            catch (Exception e)
-            {
-                return new CustomResponse<List<TimeTable>>(0, null, e.Message);
-            }
-
-        }
-
 
         public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
         {
@@ -434,24 +371,54 @@ namespace jay.school.bussiness.Bussiness
                 List<TimeTable> newTimeTable = new List<TimeTable>();
 
                 List<CTSModel> tidCTS = await _cts.FindAsync(e => e.TID == tid).Result.ToListAsync();
-                
-                var builder = Builders<TimeTable>.Filter;
-                var weekSubBuilder = Builders<WeekSubjects>.Filter;
-                
-                
-                var filter1 = weekSubBuilder.Eq("Week", today.ToString()) & weekSubBuilder.Eq("CTSId", tid);
-                var filter = builder.ElemMatch(p => p.weekSub, filter1);
 
-                List<TimeTable> fullTimeTable = _timeTable.Find(filter).ToList();
+                List<TimeTable> fullTimeTable = await _timeTable.FindAsync(e => true).Result.ToListAsync();
+
+                foreach (var cts in tidCTS)
+                {
+
+                    for (int i = 0; i < fullTimeTable.Count; i++)
+                    {
+
+                        if (fullTimeTable[i].Std == cts.Std && fullTimeTable[i].Section == cts.Section)
+                        {
+
+                            List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
+
+                            weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == cts.Id.ToLower())).Select(f => f).ToList();
+
+                            if (weekSubjects.Count > 0)
+                            {
+
+                                fullTimeTable[i].weekSub.Clear();
+
+                                fullTimeTable[i].weekSub = weekSubjects;
+
+                                newTimeTable.Add(fullTimeTable[i]);
+
+                                if (from == "up")
+                                {
+                                    DateTime tempDate = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
+
+                                    if (tempDate >= DateTime.Now)
+                                    {
+                                        upcomingTimeTable.Add(fullTimeTable[i]);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
 
 
                 if (from == "up")
                 {
-                    return new CustomResponse<List<TimeTable>>(1, fullTimeTable, null);
+                    return new CustomResponse<List<TimeTable>>(1, upcomingTimeTable, null);
                 }
                 else
                 {
-                    return new CustomResponse<List<TimeTable>>(1, fullTimeTable, null);
+                    return new CustomResponse<List<TimeTable>>(1, newTimeTable, null);
                 }
 
 

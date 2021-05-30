@@ -24,6 +24,8 @@ namespace jay.school.contracts.Entities
     public class WeekSubjects{
         public string Week { get; set; }
         public string CTSId { get; set; }
+        public string TId { get; set; }
+        public string SubjectId { get; set; }
     }
 
     public class FullTimeTable{
