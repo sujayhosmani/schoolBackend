@@ -385,7 +385,15 @@ namespace jay.school.bussiness.Bussiness
 
                             List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
 
-                            weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == cts.Id.ToLower())).Select(f => f).ToList();
+                            weekSubjects = fullTimeTable[i].weekSub.Where(e => (e.Week.ToLower() == today.ToString().ToLower()) && (e.CTSId.ToLower() == cts.Id.ToLower())).Select(
+                                f => new WeekSubjects
+                                {
+                                    CTSId = f.CTSId,
+                                    SubjectId = cts.SubjectId,
+                                    TId = cts.TID,
+                                    Week = f.Week
+                                }
+                                ).ToList();
 
                             if (weekSubjects.Count > 0)
                             {
