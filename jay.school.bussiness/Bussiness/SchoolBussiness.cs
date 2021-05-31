@@ -370,7 +370,7 @@ namespace jay.school.bussiness.Bussiness
             {
                 CultureInfo culture = new CultureInfo("en-US");
 
-                var today = "Saturday";//DateTime.Today.DayOfWeek;
+                var today = DateTime.Today.DayOfWeek;
 
                 List<TimeTable> upcomingTimeTable = new List<TimeTable>();
 
@@ -596,7 +596,7 @@ namespace jay.school.bussiness.Bussiness
                                 {
                                     if (oc.Data.Status == "Started")
                                     {
-                                        
+
                                         if (atten != null)
                                         {
                                             fullTimeTable[i].weekSub[w].Status = "NA Attended"; // resume
@@ -768,6 +768,46 @@ namespace jay.school.bussiness.Bussiness
             else
             {
                 return new CustomResponse<OnlineClass>(0, null, "Id Exists");
+            }
+
+
+        }
+
+        public async Task<CustomResponse<Attendance>> AddAttendance(Attendance attendance)
+        {
+            if (attendance.Id == null)
+            {
+                var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+                CultureInfo culture = new CultureInfo("en-US");
+                var StartTime = Convert.ToDateTime(attendance.ActualStartTime, culture);
+                var EndTime = Convert.ToDateTime(attendance.ActualEndTime, culture);
+                if (DateTime.Now >= StartTime && DateTime.Now <= EndTime)
+                {
+                    var found = await _attendance.FindAsync(e => e.OnlineClassId == attendance.OnlineClassId && e.CurrentDate == attendance.CurrentDate && e.StudentId == attendance.StudentId).Result.ToListAsync();
+                    if (found.Count > 0)
+                    {
+                        return new CustomResponse<Attendance>(1, found[0], null);
+                    }
+                    else
+                    {
+                        attendance.CurrentDate = todayDate;
+                        attendance.StartTime = DateTime.Now.ToString();
+
+                        await _attendance.InsertOneAsync(attendance);
+
+                        return new CustomResponse<Attendance>(1, attendance, null);
+                    }
+
+                }
+                else
+                {
+                    return new CustomResponse<Attendance>(0, null, "Time Exceeded");
+                }
+
+            }
+            else
+            {
+                return new CustomResponse<Attendance>(0, null, "Id Exists");
             }
 
 

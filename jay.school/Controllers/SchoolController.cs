@@ -73,6 +73,15 @@ namespace jay.school.Controllers
             return await _schoolService.AddOnlineClass(onlineClass.Data);
 
         }
+
+
+        [Route("addAttendance")]
+        [HttpPost]
+        public async Task<CustomResponse<Attendance>> AddAttendance(CustomRequest<Attendance> attendance){
+            
+            return await _schoolService.AddAttendance(attendance.Data);
+
+        }
         
         [Route("bulkAdd")]
         [HttpPost]
@@ -148,9 +157,9 @@ namespace jay.school.Controllers
 
         [Route("GetTodayClassStudent")]
         [HttpGet]
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayClassStudent(string from, string std, string section, string StudentId){
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayClassStudent(string from, string std, string section, string sid){
             
-            return await _schoolService.GetTodayClassStudent(from, std, section, StudentId);
+            return await _schoolService.GetTodayClassStudent(from, std, section, sid);
         }
     
     }
