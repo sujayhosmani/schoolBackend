@@ -552,7 +552,7 @@ namespace jay.school.bussiness.Bussiness
                             + fullTimeTable[i].EndTime + fullTimeTable[i].weekSub[w].CTSId + fullTimeTable[i].weekSub[w].Week;
 
                             CustomResponse<OnlineClass> oc = await getOnlineClassByUniqId(uniqId);
-                            Attendance atten = new Attendance();
+                            Attendance atten = null;
                             if (oc.Status == 1)
                             {
                                 CustomResponse<Attendance> at = await getAttendanceByOnlineId(oc.Data.Id, StudentId);
