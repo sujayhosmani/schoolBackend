@@ -22,6 +22,8 @@ namespace jay.school.contracts.Entities
         public string TeacherName { get; set; }
         public string TeacherId { get; set; }
         public string Tid { get; set; }
+        public string ActualStartTime { get; set; }
+        public string ActualEndTime { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string Duration { get; set; }

@@ -5,7 +5,6 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Globalization;
 using System.Linq;
@@ -24,6 +23,8 @@ namespace jay.school.bussiness.Bussiness
         private readonly IMongoCollection<Teacher> _teacher;
         private readonly IMongoCollection<CTSModel> _cts;
         private readonly IMongoCollection<OnlineClass> _onlineClass;
+        private readonly IMongoCollection<Attendance> _attendance;
+
         public SchoolBussiness(IMDBContext schoolMDBContext)
         {
             _schoolMDBContext = schoolMDBContext;
@@ -34,6 +35,7 @@ namespace jay.school.bussiness.Bussiness
             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
             _cts = _teacherMDBContext.GetCollection<CTSModel>(typeof(CTSModel).Name);
             _onlineClass = _teacherMDBContext.GetCollection<OnlineClass>(typeof(OnlineClass).Name);
+            _attendance = _teacherMDBContext.GetCollection<Attendance>(typeof(Attendance).Name);
 
         }
         public async Task<CustomResponse<Student>> AddStudent(Student student)
@@ -360,6 +362,8 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+
+
         public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
         {
             try
@@ -441,12 +445,15 @@ namespace jay.school.bussiness.Bussiness
                                     {
                                         if (oc.Status == 1)
                                         {
-                                            if(oc.Data.Status == "Started"){
+                                            if (oc.Data.Status == "Started")
+                                            {
                                                 fullTimeTable[i].weekSub[w].Status = "NA Ended";
-                                            }else{
+                                            }
+                                            else
+                                            {
                                                 fullTimeTable[i].weekSub[w].Status = "Ended";
                                             }
-                                            
+
                                             fullTimeTable[i].weekSub[w].StatusCode = 5;
                                             fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
                                         }
@@ -506,6 +513,169 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayClassStudent(string from, string std, string section, string StudentId)
+        {
+            try
+            {
+                CultureInfo culture = new CultureInfo("en-US");
+
+                var today = DateTime.Today.DayOfWeek;
+
+                List<TimeTable> upcomingTimeTable = new List<TimeTable>();
+
+                List<TimeTable> newTimeTable = new List<TimeTable>();
+
+                List<CTSModel> tidCts = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
+
+                List<TimeTable> fullTimeTable = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+
+                for (int i = 0; i < fullTimeTable.Count; i++)
+                {
+                    List<WeekSubjects> weekSubjects = new List<WeekSubjects>();
+
+                    for (int w = 0; w < fullTimeTable[i].weekSub.Count; w++)
+                    {
+                        if (fullTimeTable[i].weekSub[w].Week == today.ToString())
+                        {
+                            CTSModel cts = tidCts.Where(e => e.Id == fullTimeTable[i].weekSub[w].CTSId).FirstOrDefault();
+                            fullTimeTable[i].weekSub[w].TId = cts.TID;
+                            fullTimeTable[i].weekSub[w].SubjectId = cts.SubjectId;
+
+                            var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+
+                            var CurrentTime = DateTime.Now;
+
+                            var StartTime = Convert.ToDateTime(fullTimeTable[i].FromTime, culture);
+                            var EndTime = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
+
+                            var uniqId = todayDate + fullTimeTable[i].Std + fullTimeTable[i].Section + fullTimeTable[i].FromTime
+                            + fullTimeTable[i].EndTime + fullTimeTable[i].weekSub[w].CTSId + fullTimeTable[i].weekSub[w].Week;
+
+                            CustomResponse<OnlineClass> oc = await getOnlineClassByUniqId(uniqId);
+                            Attendance atten = null;
+                            if (oc.Status == 1)
+                            {
+                                CustomResponse<Attendance> at = await getAttendanceByOnlineId(oc.Data.Id, StudentId);
+                                if (at.Status == 1)
+                                {
+                                    atten = at.Data;
+                                }
+                            }
+
+
+                            if (CurrentTime < StartTime)
+                            {
+                                fullTimeTable[i].weekSub[w].Status = "Waiting";
+                                fullTimeTable[i].weekSub[w].StatusCode = 3;
+                            }
+                            else if (CurrentTime >= StartTime && CurrentTime <= EndTime)
+                            {
+                                if (oc.Status == 1)
+                                {
+                                    if (atten != null)
+                                    {
+                                        fullTimeTable[i].weekSub[w].Status = "Resume"; // resume
+                                    }
+                                    else
+                                    {
+                                        fullTimeTable[i].weekSub[w].Status = "Join"; // resume
+                                    }
+
+                                    fullTimeTable[i].weekSub[w].StatusCode = 1;
+                                    fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
+                                }
+                                else
+                                {
+                                    fullTimeTable[i].weekSub[w].Status = "Not started yet"; // start
+                                    fullTimeTable[i].weekSub[w].StatusCode = 2;
+                                }
+                            }
+                            else
+                            {
+                                if (oc.Status == 1)
+                                {
+                                    if (oc.Data.Status == "Started")
+                                    {
+                                        
+                                        if (atten != null)
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "NA Attended"; // resume
+                                        }
+                                        else
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "NA Absent"; // resume
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (atten != null)
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "Attended"; // resume
+                                        }
+                                        else
+                                        {
+                                            fullTimeTable[i].weekSub[w].Status = "Absent"; // resume
+                                        }
+                                    }
+
+                                    fullTimeTable[i].weekSub[w].StatusCode = 5;
+                                    fullTimeTable[i].weekSub[w].OnlineClassId = oc.Data.Id;
+                                }
+                                else
+                                {
+                                    fullTimeTable[i].weekSub[w].Status = "Skipped by Teacher"; // skipped
+                                    fullTimeTable[i].weekSub[w].StatusCode = 4;
+                                }
+                            }
+
+                            weekSubjects.Add(fullTimeTable[i].weekSub[w]);
+
+                        }
+                    }
+
+
+                    if (weekSubjects.Count > 0)
+                    {
+                        fullTimeTable[i].weekSub.Clear();
+
+                        fullTimeTable[i].weekSub = weekSubjects;
+
+                        newTimeTable.Add(fullTimeTable[i]);
+
+                        if (from == "up")
+                        {
+                            DateTime tempDate = Convert.ToDateTime(fullTimeTable[i].EndTime, culture);
+
+                            if (tempDate >= DateTime.Now)
+                            {
+                                upcomingTimeTable.Add(fullTimeTable[i]);
+                            }
+                        }
+                    }
+
+                }
+
+
+                if (from == "up")
+                {
+                    return new CustomResponse<List<TimeTable>>(1, upcomingTimeTable, null);
+                }
+                else
+                {
+                    return new CustomResponse<List<TimeTable>>(1, newTimeTable, null);
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<TimeTable>>(0, null, e.Message);
+            }
+
+        }
+
+
 
         public async Task<CustomResponse<OnlineClass>> getOnlineClassByUniqId(string uniqId)
         {
@@ -531,6 +701,30 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
+        public async Task<CustomResponse<Attendance>> getAttendanceByOnlineId(string onlineId, string studentId)
+        {
+
+            try
+            {
+                var attendance = await _attendance.FindAsync(e => e.OnlineClassId == onlineId && e.StudentId == studentId).Result.FirstAsync();
+
+                if (attendance != null)
+                {
+                    return new CustomResponse<Attendance>(1, attendance, null);
+                }
+                else
+                {
+                    return new CustomResponse<Attendance>(0, null, "no data");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<Attendance>(0, null, e.Message);
+            }
+
+        }
+
         public async Task<CustomResponse<OnlineClass>> AddOnlineClass(OnlineClass onlineClass)
         {
             if (onlineClass.Id == null)
@@ -541,7 +735,7 @@ namespace jay.school.bussiness.Bussiness
                 var uniqId = todayDate + onlineClass.Std + onlineClass.Section + onlineClass.ActualStartTime
                                         + onlineClass.ActualEndTime + onlineClass.CTSId + onlineClass.Week;
 
-                
+
                 CultureInfo culture = new CultureInfo("en-US");
                 var StartTime = Convert.ToDateTime(onlineClass.ActualStartTime, culture);
                 var EndTime = Convert.ToDateTime(onlineClass.ActualEndTime, culture);
@@ -564,7 +758,9 @@ namespace jay.school.bussiness.Bussiness
                         return new CustomResponse<OnlineClass>(1, onlineClass, null);
                     }
 
-                }else{
+                }
+                else
+                {
                     return new CustomResponse<OnlineClass>(0, null, "Time Exceeded");
                 }
 

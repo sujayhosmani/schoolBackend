@@ -146,5 +146,12 @@ namespace jay.school.Controllers
         
         }
 
+        [Route("GetTodayClassStudent")]
+        [HttpGet]
+        public async Task<CustomResponse<List<TimeTable>>> GetTodayClassStudent(string from, string std, string section, string StudentId){
+            
+            return await _schoolService.GetTodayClassStudent(from, std, section, StudentId);
+        }
+    
     }
 }
