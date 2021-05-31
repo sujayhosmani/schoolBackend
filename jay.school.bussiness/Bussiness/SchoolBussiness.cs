@@ -538,8 +538,8 @@ namespace jay.school.bussiness.Bussiness
                         if (fullTimeTable[i].weekSub[w].Week == today.ToString())
                         {
                             CTSModel cts = tidCts.Where(e => e.Id == fullTimeTable[i].weekSub[w].CTSId).FirstOrDefault();
-                            fullTimeTable[i].weekSub[w].TId = cts.TID;
-                            fullTimeTable[i].weekSub[w].SubjectId = cts.SubjectId;
+                            fullTimeTable[i].weekSub[w].TId = cts?.TID ?? "";
+                            fullTimeTable[i].weekSub[w].SubjectId = cts?.SubjectId ?? "";
 
                             var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
 
