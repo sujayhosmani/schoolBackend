@@ -20,6 +20,27 @@ namespace jay.school.Controllers
             _assignmentService = assignmentService;
         }
 
+        [Route("addAssignment")]
+        [HttpPost]
+        public async Task<CustomResponse<Assignment>> AddAssignment(CustomRequest<Assignment> assignment){
+
+            return await _assignmentService.AddAssignment(assignment.Data);
+        }
+        
+        [Route("getAssignmentsByTid")]
+        [HttpGet]
+        public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByTid(string tid){
+
+            return await _assignmentService.GetAssignmentsByTid(tid);
+        }
+
+        [Route("getAssignmentsByClass")]
+        [HttpGet]
+        public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string Std, string section){
+
+            return await _assignmentService.GetAssignmentsByClass(Std, section);
+        }
+
 
     }
 

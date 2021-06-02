@@ -17,7 +17,7 @@ namespace jay.school.contracts.Entities
         public string SubjectName { get; set; }
         public string Tid { get; set; }
         public string TeacherName { get; set; }
-        public string Class { get; set; }
+        public string Std { get; set; }
         public string Section { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }

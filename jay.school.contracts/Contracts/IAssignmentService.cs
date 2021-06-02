@@ -8,7 +8,9 @@ namespace jay.school.contracts.Contracts
 {
     public interface IAssignmentService
     {
-        
+        Task<CustomResponse<Assignment>> AddAssignment(Assignment assignment);
+        Task<CustomResponse<List<Assignment>>> GetAssignmentsByTid(string tid);
+        Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string Std, string section);
 
     }
 }
