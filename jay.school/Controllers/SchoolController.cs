@@ -66,22 +66,7 @@ namespace jay.school.Controllers
         }
 
 
-        [Route("addOnlineClass")]
-        [HttpPost]
-        public async Task<CustomResponse<OnlineClass>> AddOnlineClass(CustomRequest<OnlineClass> onlineClass){
-            
-            return await _schoolService.AddOnlineClass(onlineClass.Data);
-
-        }
-
-
-        [Route("addAttendance")]
-        [HttpPost]
-        public async Task<CustomResponse<Attendance>> AddAttendance(CustomRequest<Attendance> attendance){
-            
-            return await _schoolService.AddAttendance(attendance.Data);
-
-        }
+        
         
         [Route("bulkAdd")]
         [HttpPost]
@@ -91,76 +76,6 @@ namespace jay.school.Controllers
         }
 
 
-        [Route("addTimeTable")]
-        [HttpPost]
-        public async Task<CustomResponse<string>> AddTimeTables(CustomRequest<List<TimeTable>> timeTable)
-        {
-
-            return await _schoolService.AddTimeTables(timeTable.Data);
-        }
-
-        [Route("addSubject")]
-        [HttpPost]
-        public async Task<CustomResponse<string>> AddSubject(CustomRequest<SubjectsModel> subject)
-        {
-            
-            return await _schoolService.AddSubject(subject.Data);
-        }
-
-        [Route("getTimeTable")]
-        [HttpGet]
-        public async Task<CustomResponse<List<TimeTable>>> GetTimeTables(string from, string std, string section)
-        {
-            return await _schoolService.GetTimeTables(from, std, section);
-            
-        }
-
-        [Route("getSubjects")]
-        [HttpGet]
-        public async Task<CustomResponse<List<SubjectsModel>>> GetSubjects()
-        {
-            return await _schoolService.GetSubjects();
-            
-        }
-
-        [Route("delSubject")]
-        [HttpPost]
-        public async Task<CustomResponse<string>> DeleteSubject(CustomRequest<SubjectsModel> subject)
-        {
-            
-            return await _schoolService.DeleteSubject(subject.Data);
-        }
-
-        [Route("getFullTimeTable")]
-        [HttpGet]
-        public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(bool isTT, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
-        {
-            return await _schoolService.GetFullTimeTables(isTT, isCTS, isSubject, isTeacher, std, section);
-            
-        }
-
-        [Route("getTodayClass")]
-        [HttpGet]
-        public async Task<CustomResponse<FullTimeTable>> GetTodayClass(string from, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
-        {
-            return await _schoolService.GetTodayClass(from, isCTS, isSubject, isTeacher, std, section);
-            
-        }
-
-        [Route("getTodayTeacherTimeTable")]
-        [HttpGet]
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid){
-            
-            return await _schoolService.GetTodayTeacherTimeTable(from, tid);
-        
-        }
-
-        [Route("GetTodayClassStudent")]
-        [HttpGet]
-        public async Task<CustomResponse<List<TimeTable>>> GetTodayClassStudent(string from, string std, string section, string sid){
-            
-            return await _schoolService.GetTodayClassStudent(from, std, section, sid);
-        }
     
     }
 }

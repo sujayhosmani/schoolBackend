@@ -51,6 +51,10 @@ namespace jay.school
 
             services.AddTransient<IFileDocService, FileDocBussiness>();
 
+            services.AddTransient<ITimeTableService, TimeTableBusiness>();
+
+            services.AddTransient<IAssignmentService, AssignmentBusiness>();
+
             services.AddScoped<IMDBContext, SchoolMDBContext>(); 
 
         }

@@ -14,12 +14,11 @@ namespace jay.school.bussiness.Bussiness
     {
         private readonly IMDBContext _teacherMDBContext;
         private readonly IMongoCollection<Teacher> _teacher;
-        private readonly IMongoCollection<CTSModel> _cts;
         public TeacherBussiness(IMDBContext context)
         {
             _teacherMDBContext = context;
+            
             _teacher = _teacherMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
-            _cts = _teacherMDBContext.GetCollection<CTSModel>(typeof(CTSModel).Name);
         }
 
         public async Task<CustomResponse<string>> AddTeachers(CustomRequest<Teacher> customRequest)
@@ -80,66 +79,6 @@ namespace jay.school.bussiness.Bussiness
             return new CustomResponse<List<Teacher>>(1, teachers, null);
         }
 
-        public async Task<CustomResponse<List<CTSModel>>> GetCTS(string std, string section)
-        {
-            try
-            {
-                List<CTSModel> cts = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
-
-                return new CustomResponse<List<CTSModel>>(1, cts, null);
-
-            }
-            catch (Exception e)
-            {
-                return new CustomResponse<List<CTSModel>>(0, null, e.Message);
-            }
-
-        }
-
-        public async Task<CustomResponse<string>> AddCTS(CustomRequest<List<CTSModel>> ctsList)
-        {
-
-
-
-            try
-            {
-                var updateFields = ctsList.Data.Where(e => e.Id != null).ToList();
-
-                var addFields = ctsList.Data.Where(e => e.Id == null).ToList();
-
-                if (addFields.Count > 0)
-                {
-                    await _cts.InsertManyAsync(addFields);
-                }
-
-                foreach (var list in updateFields)
-                {
-                    if (list.Id != null)
-                    {
-                        UpdateDefinition<CTSModel> updateDefinition = Builders<CTSModel>.Update.Set(x => x, list);
-                        //    .Set(x => x.Std,list.Std)
-                        //    .Set(x => x.SubjectId,list.SubjectId)
-                        //    .Set(x => x.TID ,list.TID);
-                        await _cts.ReplaceOneAsync(x => x.Id == list.Id, list); // replaces first match
-                    }
-                }
-
-                return new CustomResponse<string>(1, "Inserted Successfully", null);
-
-            }
-            catch (Exception e)
-            {
-                return new CustomResponse<string>(0, null, e.Message);
-            }
-
-
-
-
-
-
-
-
-        }
-
+       
     }
 }
