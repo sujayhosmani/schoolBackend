@@ -27,7 +27,7 @@ namespace jay.school.Controllers
             return await _assignmentService.AddAssignment(assignment.Data);
         }
         
-        [Route("getAssignmentsByTid")]
+        [Route("getAssignmentsByTid/{tid}")]
         [HttpGet]
         public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByTid(string tid){
 
