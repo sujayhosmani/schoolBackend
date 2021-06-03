@@ -35,7 +35,7 @@ namespace jay.school.bussiness.Bussiness
 
                 assignment.StartDate = todayDate;
                 
-                assignment.EndDate = DateTime.Today.AddDays(int.Parse(assignment.EndDate ?? "0")).ToString("MM/dd/yyyy");
+                assignment.EndDate = DateTime.Today.AddDays(int.Parse(assignment.EndDate.Trim() ?? "0")).ToString("MM/dd/yyyy");
 
                 await _assignment.InsertOneAsync(assignment); 
 
