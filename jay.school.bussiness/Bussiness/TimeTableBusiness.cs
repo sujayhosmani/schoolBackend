@@ -57,6 +57,22 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
+        public async Task<CustomResponse<List<CTSModel>>> GetCTSByTid(string tid)
+        {
+            try
+            {
+                List<CTSModel> cts = await _cts.FindAsync(e => ((e.TID == tid))).Result.ToListAsync();
+
+                return new CustomResponse<List<CTSModel>>(1, cts, null);
+
+            }
+            catch (Exception e)
+            {
+                return new CustomResponse<List<CTSModel>>(0, null, e.Message);
+            }
+
+        }
+
         public async Task<CustomResponse<string>> AddCTS(CustomRequest<List<CTSModel>> ctsList)
         {
 

@@ -10,6 +10,8 @@ namespace jay.school.contracts.Contracts
     {
         Task<CustomResponse<List<CTSModel>>> GetCTS(string std, string section);
 
+        Task<CustomResponse<List<CTSModel>>> GetCTSByTid(string tid);
+
         Task<CustomResponse<string>> AddCTS(CustomRequest<List<CTSModel>> ctsList);
 
         Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid);

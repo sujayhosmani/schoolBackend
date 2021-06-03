@@ -28,6 +28,13 @@ namespace jay.school.Controllers
             return await _timeTableSevice.GetCTS(std,section);
         }
 
+        [Route("getCTSById/{tid}")]
+        [HttpGet]
+        public async Task<ActionResult<CustomResponse<List<CTSModel>>>> GetCTS(string tid)
+        {
+            return await _timeTableSevice.GetCTSByTid(tid);
+        }
+
         [Route("addCTS")]
         [HttpPost]
         public async Task<ActionResult<CustomResponse<string>>> AddCTS(CustomRequest<List<CTSModel>> ctsList)
