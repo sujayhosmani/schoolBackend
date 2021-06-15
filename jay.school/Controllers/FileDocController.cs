@@ -17,32 +17,25 @@ namespace jay.school.Controllers
     public class FileDocController : ControllerBase
     {
         private readonly IFileDocService _fileDocService;
+        private IHostingEnvironment _hostingEnvironment;
 
-        public FileDocController(IFileDocService fileDocService)
+        public FileDocController(IFileDocService fileDocService, IHostingEnvironment hostingEnvironment)
         {
             _fileDocService = fileDocService;
+            _hostingEnvironment = hostingEnvironment;
         }
         
         
-        [Route("ping")]
-        [HttpGet]
-        public ActionResult checkhealth()
-        {
-
-            return Ok("working..." + DateTime.Now.ToString());
-
-        }
         
-        [Route("UploadFile")]
         [HttpPost, DisableRequestSizeLimit]
-        public ActionResult<CustomResponse<FileDoc>> UploadFile([FromForm] FileDoc fileDoc)
+        public async Task<ActionResult<CustomResponse<FileDoc>>> UploadFile([FromForm] FileDoc fileDoc)
         {
 
             //fileDoc.File = Request.Form.Files[0];
 
             FileDoc fileDoc1 = new FileDoc
             {
-                File = Request.Form.Files,
+                File = Request.Form.Files[0],
 
                 FileName = Request.Form["FileName"],
 
@@ -55,7 +48,7 @@ namespace jay.school.Controllers
 
             
 
-            return  _fileDocService.UploadFile(fileDoc);
+            return await _fileDocService.UploadFile(fileDoc);
 
         }  
     }
