@@ -109,7 +109,7 @@ namespace jay.school.bussiness.Bussiness
             }
             catch (System.Exception ex)
             {
-                return new CustomResponse<MultipleFileDoc>(0, null, ex.Message);
+                return new CustomResponse<MultipleFileDoc>(0, null, ex.ToString());
             }
         }
     }
