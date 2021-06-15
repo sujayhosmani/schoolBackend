@@ -17,25 +17,20 @@ namespace jay.school.bussiness.Bussiness
         {
             _hostingEnvironment = hostingEnvironment;
         }
-        public CustomResponse<FileDoc> UploadFile(FileDoc fileDoc1)
+        public async Task<CustomResponse<FileDoc>> UploadFile(FileDoc fileDoc1)
         {
+            string webRootPath2 = _hostingEnvironment.ContentRootPath;
             try
             {
-                // var file = fileDoc1.File[0];
+                var file = fileDoc1.File;  
 
                 string folderName = "";
 
-                switch (fileDoc1.From)
+                switch (fileDoc1.From) 
                 {
                     case "student_profile":
 
                         folderName = "Res/Student/Profile";
-
-                        break;
-
-                    case "assignment":
-
-                        folderName = "Res/Assignments/" + fileDoc1.UploadingDate + "/" + fileDoc1.ClassSection + "/" + fileDoc1.Subject + "/" + fileDoc1.StudentName + "_" + fileDoc1.Sid;
 
                         break;
                 }
@@ -45,43 +40,26 @@ namespace jay.school.bussiness.Bussiness
                 {
                     Directory.CreateDirectory(newPath);
                 }
-                List<AssignmentFiles> afiles = new List<AssignmentFiles>();
-                if (fileDoc1.File.Count > 0)
+                string fileName = "";
+                if (file.Length > 0)
                 {
-                    afiles.Clear();
-                    foreach (var filez in fileDoc1.File)
+                    fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        string fileName = "";
-                        if (filez.Length > 0)
-                        {
-                            fileName = ContentDispositionHeaderValue.Parse(filez.ContentDisposition).FileName.Trim('"');
-                            string fullPath = Path.Combine(newPath, fileName);
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                filez.CopyTo(stream);
-                            }
-                            AssignmentFiles f = new AssignmentFiles
-                            {
-                                ImgUrl = fullPath,
-                                Key = afiles.Count + 1,
-                                Type = fileDoc1.FileType,
-                                UploadedDate = fileDoc1.UploadingDate
-
-                            };
-                            afiles.Add(f);
-                        }
+                        file.CopyTo(stream);
                     }
-                    fileDoc1.FilePath = afiles;
+                    fileDoc1.FilePath = fullPath;
                 }
+                
                 return new CustomResponse<FileDoc>(1, fileDoc1, null);
             }
             catch (System.Exception ex)
             {
-                return new CustomResponse<FileDoc>(0, null, ex.Message );
+                return new CustomResponse<FileDoc>(0, null, ex.Message + webRootPath2);
             }
         }
 
-
+     
     }
 }
-
