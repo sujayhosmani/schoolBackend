@@ -10,7 +10,7 @@ namespace jay.school.contracts.Contracts
     {
         Task<CustomResponse<Assignment>> AddAssignment(Assignment assignment);
         Task<CustomResponse<List<Assignment>>> GetAssignmentsByTid(string tid);
-        Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string Std, string section);
+        Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string std, string section, string sid);
 
     }
 }

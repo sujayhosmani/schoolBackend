@@ -36,9 +36,9 @@ namespace jay.school.Controllers
 
         [Route("getAssignmentsByClass")]
         [HttpGet]
-        public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string Std, string section){
+        public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string std, string section, string sid){
 
-            return await _assignmentService.GetAssignmentsByClass(Std, section);
+            return await _assignmentService.GetAssignmentsByClass(std, section, sid);
         }
 
 

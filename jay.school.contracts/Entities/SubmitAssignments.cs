@@ -22,6 +22,9 @@ namespace jay.school.contracts.Entities
         public string Section { get; set; }
         public string StuImg { get; set; }
         public string Status { get; set; }
+        public string Remark { get; set; }
+        public string MarksObtained { get; set; }
+        public string TotalMarks { get; set; }
         
     }
 }

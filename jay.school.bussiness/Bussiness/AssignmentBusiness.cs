@@ -16,6 +16,7 @@ namespace jay.school.bussiness.Bussiness
     {
         
         private readonly IMongoCollection<Assignment> _assignment;
+        private readonly IMongoCollection<SubmitAssignments> _submittedAssignment;
          private readonly IMDBContext _assignmentMDBContext;
 
         public AssignmentBusiness(IMDBContext assignmentMDBContext)
@@ -23,6 +24,8 @@ namespace jay.school.bussiness.Bussiness
             _assignmentMDBContext = assignmentMDBContext;
 
              _assignment = _assignmentMDBContext.GetCollection<Assignment>(typeof(Assignment).Name);
+
+             _submittedAssignment = _assignmentMDBContext.GetCollection<SubmitAssignments>(typeof(SubmitAssignments).Name);
 
         }
 
@@ -65,10 +68,25 @@ namespace jay.school.bussiness.Bussiness
                
         }
 
-        public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string std, string section){
+        public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string std, string section, string sid){
             try{
                 
                 List<Assignment> assignments = await _assignment.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
+
+                foreach(var assig in assignments){
+                    
+                    SubmitAssignments sa = await _submittedAssignment.FindAsync(e => ((e.Sid == sid) && (e.AssignmentId == assig.Id))).Result.FirstAsync();
+                    
+                    if(sa != null){
+                        if(sa.Remark != null || sa.Remark != String.Empty){
+                            assig.Status = sa.Status;
+                        }  
+                    }else{
+
+                        assig.Status = "Pending";
+
+                    }
+                }
 
                 return new CustomResponse<List<Assignment>>(1, assignments, null);
 
