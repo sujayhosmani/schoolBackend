@@ -19,7 +19,6 @@ namespace jay.school.bussiness.Bussiness
         }
         public CustomResponse<FileDoc> UploadFile(FileDoc fileDoc1)
         {
-            string webRootPath2 = _hostingEnvironment.ContentRootPath;
             try
             {
                 // var file = fileDoc1.File[0];
@@ -78,7 +77,7 @@ namespace jay.school.bussiness.Bussiness
             }
             catch (System.Exception ex)
             {
-                return new CustomResponse<FileDoc>(0, null, ex.Message + webRootPath2);
+                return new CustomResponse<FileDoc>(0, null, ex.Message );
             }
         }
 

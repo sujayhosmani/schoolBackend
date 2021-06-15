@@ -55,7 +55,7 @@ namespace jay.school.Controllers
 
             
 
-            return  _fileDocService.UploadFile(fileDoc);
+            return  _fileDocService.UploadFile(fileDoc1);
 
         }  
     }
