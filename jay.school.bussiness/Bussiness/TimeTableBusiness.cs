@@ -332,7 +332,7 @@ namespace jay.school.bussiness.Bussiness
                                     fullTimeTable[i].weekSub[w].TId = cts.TID;
                                     fullTimeTable[i].weekSub[w].SubjectId = cts.SubjectId;
 
-                                    var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+                                    var todayDate = DateTime.Today.ToString("dd/MM/yyyy");
 
                                     var CurrentTime = DateTime.Now;
 
@@ -464,7 +464,7 @@ namespace jay.school.bussiness.Bussiness
                             fullTimeTable[i].weekSub[w].TId = cts?.TID ?? "";
                             fullTimeTable[i].weekSub[w].SubjectId = cts?.SubjectId ?? "";
 
-                            var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+                            var todayDate = DateTime.Today.ToString("dd/MM/yyyy");
 
                             var CurrentTime = DateTime.Now;
 
@@ -653,7 +653,7 @@ namespace jay.school.bussiness.Bussiness
             if (onlineClass.Id == null)
             {
 
-                var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+                var todayDate = DateTime.Today.ToString("dd/MM/yyyy");
 
                 var uniqId = todayDate + onlineClass.Std + onlineClass.Section + onlineClass.ActualStartTime
                                         + onlineClass.ActualEndTime + onlineClass.CTSId + onlineClass.Week;
@@ -700,7 +700,7 @@ namespace jay.school.bussiness.Bussiness
         {
             if (attendance.Id == null)
             {
-                var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+                var todayDate = DateTime.Today.ToString("dd/MM/yyyy");
                 CultureInfo culture = new CultureInfo("en-US");
                 var StartTime = Convert.ToDateTime(attendance.ActualStartTime, culture);
                 var EndTime = Convert.ToDateTime(attendance.ActualEndTime, culture);

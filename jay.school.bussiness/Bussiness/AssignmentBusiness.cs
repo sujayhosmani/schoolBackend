@@ -31,11 +31,11 @@ namespace jay.school.bussiness.Bussiness
             if (assignment.Id == null)
             {
 
-                var todayDate = DateTime.Today.ToString("MM/dd/yyyy");
+                var todayDate = DateTime.Today.ToString("dd/MM/yyyy");
 
                 assignment.StartDate = todayDate;
                 
-                assignment.EndDate = DateTime.Today.AddDays(int.Parse(assignment.EndDate.Trim() ?? "0")).ToString("MM/dd/yyyy");
+                assignment.EndDate = DateTime.Today.AddDays(int.Parse(assignment.EndDate.Trim() ?? "0")).ToString("dd/MM//yyyy");
 
                 await _assignment.InsertOneAsync(assignment); 
 
