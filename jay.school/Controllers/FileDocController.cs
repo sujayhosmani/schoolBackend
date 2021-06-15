@@ -22,6 +22,17 @@ namespace jay.school.Controllers
         {
             _fileDocService = fileDocService;
         }
+        
+        
+        [Route("ping")]
+        [HttpGet]
+        public ActionResult checkhealth()
+        {
+
+            return Ok("working..." + DateTime.Now.ToString());
+
+        }
+        
         [HttpPost, DisableRequestSizeLimit]
         public ActionResult<CustomResponse<FileDoc>> UploadFile([FromForm] FileDoc fileDoc)
         {
