@@ -33,6 +33,7 @@ namespace jay.school.Controllers
 
         }
         
+        [Route("UploadFile")]
         [HttpPost, DisableRequestSizeLimit]
         public ActionResult<CustomResponse<FileDoc>> UploadFile([FromForm] FileDoc fileDoc)
         {
