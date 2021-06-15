@@ -81,30 +81,32 @@ namespace jay.school.bussiness.Bussiness
                 {
                     Directory.CreateDirectory(newPath);
                 }
-                List<AssignmentFiles> afiles = new List<AssignmentFiles>();
-                afiles.Clear();
-                multipleFileDoc.Files.ForEach(async file =>
+                // List<AssignmentFiles> afiles = new List<AssignmentFiles>();
+                // afiles.Clear();
+                multipleFileDoc.FilePath = new List<AssignmentFiles>();
+                for (var i = 0; i < multipleFileDoc.Files.Count; i++)
                 {
-                    if (file.Length <= 0) return;
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    string fullPath = Path.Combine(newPath, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    if (multipleFileDoc.Files[i].Length > 0)
                     {
-                        await file.CopyToAsync(stream);
+                        var fileName = ContentDispositionHeaderValue.Parse(multipleFileDoc.Files[i].ContentDisposition).FileName.Trim('"');
+                        string fullPath = Path.Combine(newPath, fileName);
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            await multipleFileDoc.Files[i].CopyToAsync(stream);
+                        }
+                        AssignmentFiles f = new AssignmentFiles
+                        {
+                            ImgUrl = fullPath,
+                            Key = i + 1,
+                            Type = multipleFileDoc.FileType,
+                            UploadedDate = multipleFileDoc.UploadingDate
+
+                        };
+                        // afiles.Add(f);
+                        multipleFileDoc.FilePath.Add(f);
                     }
-                    AssignmentFiles f = new AssignmentFiles
-                    {
-                        ImgUrl = fullPath,
-                        Key = afiles.Count + 1,
-                        Type = multipleFileDoc.FileType,
-                        UploadedDate = multipleFileDoc.UploadingDate
+                }
 
-                    };
-                    afiles.Add(f);
-
-                });
-                multipleFileDoc.FilePath = afiles;
-                
                 return new CustomResponse<MultipleFileDoc>(1, multipleFileDoc, null);
             }
             catch (System.Exception ex)
