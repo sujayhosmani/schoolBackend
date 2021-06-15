@@ -54,7 +54,7 @@ namespace jay.school.Controllers
 
         [Route("multipleFiles")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<ActionResult<CustomResponse<MultipleFileDoc>>> multipleFiles(MultipleFileDoc multipleFileDoc)
+        public async Task<ActionResult<CustomResponse<MultipleFileDoc>>> multipleFiles([FromForm] MultipleFileDoc multipleFileDoc)
         {
 
             FileDoc fileDoc1 = new FileDoc
