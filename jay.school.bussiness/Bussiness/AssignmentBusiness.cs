@@ -75,11 +75,11 @@ namespace jay.school.bussiness.Bussiness
 
                 foreach(var assig in assignments){
                     
-                    SubmitAssignments sa = await _submittedAssignment.FindAsync(e => ((e.Sid == sid) && (e.AssignmentId == assig.Id))).Result.FirstAsync();
+                    List<SubmitAssignments> sa = await _submittedAssignment.FindAsync(e => ((e.Sid == sid) && (e.AssignmentId == assig.Id))).Result.ToListAsync();
                     
-                    if(sa != null){
-                        if(sa.Remark != null || sa.Remark != String.Empty){
-                            assig.Status = sa.Status;
+                    if(sa != null && sa.Count > 0){
+                        if(sa[0].Remark != null || sa[0].Remark != String.Empty){
+                            assig.Status = sa[0].Status;
                         }  
                     }else{
 
