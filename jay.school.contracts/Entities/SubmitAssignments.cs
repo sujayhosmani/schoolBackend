@@ -15,7 +15,7 @@ namespace jay.school.contracts.Entities
         public string ActualDate { get; set; }
         public string ActualEndDate { get; set; }
         public string SubmittedDate { get; set; }
-        public List<string> FileUrls { get; set; }
+        public List<AssignmentFiles> FileUrls { get; set; }
         public string StudentName { get; set; }
         public string Sid { get; set; }
         public string Std { get; set; }
@@ -23,8 +23,17 @@ namespace jay.school.contracts.Entities
         public string StuImg { get; set; }
         public string Status { get; set; }
         public string Remark { get; set; }
+        public string StudentRemark { get; set; }
         public string MarksObtained { get; set; }
         public string TotalMarks { get; set; }
         
+    }
+
+    public class AssignmentFiles
+    {
+        public string ImgUrl { get; set;}
+        public string UploadedDate { get; set;}
+        public string Type { get; set;}
+        public int Key { get; set;}
     }
 }
