@@ -106,7 +106,7 @@ namespace jay.school.bussiness.Bussiness
                         multipleFileDoc.FilePath.Add(f);
                     }
                 }
-
+                multipleFileDoc.Files = null;
                 return new CustomResponse<MultipleFileDoc>(1, multipleFileDoc, null);
             }
             catch (System.Exception ex)
