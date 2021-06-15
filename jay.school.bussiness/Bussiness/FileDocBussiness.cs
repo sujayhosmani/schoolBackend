@@ -22,11 +22,11 @@ namespace jay.school.bussiness.Bussiness
             string webRootPath2 = _hostingEnvironment.ContentRootPath;
             try
             {
-                var file = fileDoc1.File;  
+                var file = fileDoc1.File;
 
                 string folderName = "";
 
-                switch (fileDoc1.From) 
+                switch (fileDoc1.From)
                 {
                     case "student_profile":
 
@@ -51,7 +51,7 @@ namespace jay.school.bussiness.Bussiness
                     }
                     fileDoc1.FilePath = fullPath;
                 }
-                
+
                 return new CustomResponse<FileDoc>(1, fileDoc1, null);
             }
             catch (System.Exception ex)
@@ -60,6 +60,57 @@ namespace jay.school.bussiness.Bussiness
             }
         }
 
-     
+
+        public async Task<CustomResponse<MultipleFileDoc>> multipleFiles(MultipleFileDoc multipleFileDoc)
+        {
+            try
+            {
+
+                string folderName = "";
+
+                switch (multipleFileDoc.From)
+                {
+                    case "assignments":
+
+                        folderName = "Res/Assignments/" + multipleFileDoc.UploadingDate + "/" + multipleFileDoc.ClassSection + "/" + multipleFileDoc.Subject + "/" + multipleFileDoc.StudentName + "_" + multipleFileDoc.Sid;
+                        break;
+                }
+                string webRootPath = "/var/www/data/";
+                string newPath = Path.Combine(webRootPath, folderName);
+                if (!Directory.Exists(newPath))
+                {
+                    Directory.CreateDirectory(newPath);
+                }
+                List<AssignmentFiles> afiles = new List<AssignmentFiles>();
+                afiles.Clear();
+                multipleFileDoc.Files.ForEach(async file =>
+                {
+                    if (file.Length <= 0) return;
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    AssignmentFiles f = new AssignmentFiles
+                    {
+                        ImgUrl = fullPath,
+                        Key = afiles.Count + 1,
+                        Type = multipleFileDoc.FileType,
+                        UploadedDate = multipleFileDoc.UploadingDate
+
+                    };
+                    afiles.Add(f);
+
+                });
+                multipleFileDoc.FilePath = afiles;
+                
+                return new CustomResponse<MultipleFileDoc>(1, multipleFileDoc, null);
+            }
+            catch (System.Exception ex)
+            {
+                return new CustomResponse<MultipleFileDoc>(0, null, ex.Message);
+            }
+        }
     }
 }

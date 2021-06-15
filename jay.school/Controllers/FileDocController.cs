@@ -50,5 +50,27 @@ namespace jay.school.Controllers
             return await _fileDocService.UploadFile(fileDoc);
 
         }  
+
+
+        [Route("multipleFiles")]
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<ActionResult<CustomResponse<MultipleFileDoc>>> multipleFiles(MultipleFileDoc multipleFileDoc)
+        {
+
+            FileDoc fileDoc1 = new FileDoc
+            {
+                File = Request.Form.Files[0],
+
+                FileName = Request.Form["FileName"],
+
+                FileType = Request.Form["FileType"],
+
+                From = Request.Form["From"]
+            };
+
+            return await _fileDocService.multipleFiles(multipleFileDoc);
+
+        }  
+        
     }
 }
