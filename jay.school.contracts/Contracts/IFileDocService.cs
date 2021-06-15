@@ -8,6 +8,6 @@ namespace jay.school.contracts.Contracts
 {
     public interface IFileDocService
     {
-        Task<CustomResponse<FileDoc>> UploadFile(FileDoc fileDoc);
+        CustomResponse<FileDoc> UploadFile(FileDoc fileDoc);
     }
 }
