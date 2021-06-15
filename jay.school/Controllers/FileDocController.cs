@@ -27,6 +27,7 @@ namespace jay.school.Controllers
         
         
         
+        [Route("UploadFile")]
         [HttpPost, DisableRequestSizeLimit]
         public async Task<ActionResult<CustomResponse<FileDoc>>> UploadFile([FromForm] FileDoc fileDoc)
         {
