@@ -45,6 +45,8 @@ namespace jay.school.contracts.Entities
         public string StudentName { get; set; }
         public string Sid { get; set; }
         public AssignmentFiles FilePath { get; set; }
-
+        
+        [JsonIgnore]
+        public IFormFile Files { get; set; }    
     }
 }

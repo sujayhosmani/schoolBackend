@@ -136,14 +136,15 @@ namespace jay.school.bussiness.Bussiness
                     Directory.CreateDirectory(newPath);
                 }
 
-                if (singleFileDoc.FilePath.AssigFile.Length > 0)
+                if (singleFileDoc.Files.Length > 0)
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(singleFileDoc.FilePath.AssigFile.ContentDisposition).FileName.Trim('"');
+                    var fileName = ContentDispositionHeaderValue.Parse(singleFileDoc.Files.ContentDisposition).FileName.Trim('"');
                     string fullPath = Path.Combine(newPath, fileName);
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        await singleFileDoc.FilePath.AssigFile.CopyToAsync(stream);
+                        await singleFileDoc.Files.CopyToAsync(stream);
                     }
+                    singleFileDoc.FilePath = new AssignmentFiles();
                     singleFileDoc.FilePath.ImgUrl = fullPath;
                     singleFileDoc.FilePath.isUploaded = true;
                     singleFileDoc.FilePath.isUploading = false;
