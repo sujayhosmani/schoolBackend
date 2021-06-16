@@ -74,7 +74,7 @@ namespace jay.school.Controllers
 
         [Route("singleFiles")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc)
+        public async Task<CustomResponse<SingleFileDoc>> SingleFiles([FromForm] SingleFileDoc singleFileDoc)
         {
 
             FileDoc fileDoc1 = new FileDoc
