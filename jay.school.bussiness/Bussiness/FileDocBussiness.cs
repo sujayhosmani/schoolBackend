@@ -114,5 +114,47 @@ namespace jay.school.bussiness.Bussiness
                 return new CustomResponse<MultipleFileDoc>(0, null, ex.ToString());
             }
         }
+
+        public async Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc)
+        {
+            try
+            {
+
+                string folderName = "";
+
+                switch (singleFileDoc.From)
+                {
+                    case "assignments":
+
+                        folderName = "Res/Assignments/" + singleFileDoc.UploadingDate + "/" + singleFileDoc.ClassSection + "/" + singleFileDoc.Subject + "/" + singleFileDoc.StudentName + "_" + singleFileDoc.Sid;
+                        break;
+                }
+                string webRootPath = "/var/www/data/";
+                string newPath = Path.Combine(webRootPath, folderName);
+                if (!Directory.Exists(newPath))
+                {
+                    Directory.CreateDirectory(newPath);
+                }
+
+                if (singleFileDoc.FilePath.AssigFile.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(singleFileDoc.FilePath.AssigFile.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await singleFileDoc.FilePath.AssigFile.CopyToAsync(stream);
+                    }
+                    singleFileDoc.FilePath.ImgUrl = fullPath;
+                    singleFileDoc.FilePath.isUploaded = true;
+                    singleFileDoc.FilePath.isUploading = false;
+                }
+
+                return new CustomResponse<SingleFileDoc>(1, singleFileDoc, null);
+            }
+            catch (System.Exception ex)
+            {
+                return new CustomResponse<SingleFileDoc>(0, null, ex.ToString());
+            }
+        }
     }
 }

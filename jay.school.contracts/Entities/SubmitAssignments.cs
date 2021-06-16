@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace jay.school.contracts.Entities
 {
@@ -26,14 +31,17 @@ namespace jay.school.contracts.Entities
         public string StudentRemark { get; set; }
         public string MarksObtained { get; set; }
         public string TotalMarks { get; set; }
-        
+
     }
 
     public class AssignmentFiles
     {
-        public string ImgUrl { get; set;}
-        public string UploadedDate { get; set;}
-        public string Type { get; set;}
-        public int Key { get; set;}
+        public string ImgUrl { get; set; }
+        public string UploadedDate { get; set; }
+        public string Type { get; set; }
+        public int Key { get; set; }
+        public IFormFile AssigFile { get; set; }
+        public bool isUploaded { get; set; }
+        public bool isUploading { get; set; }
     }
 }

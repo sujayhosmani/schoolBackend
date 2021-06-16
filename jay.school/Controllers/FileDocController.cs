@@ -71,6 +71,15 @@ namespace jay.school.Controllers
             return await _fileDocService.multipleFiles(multipleFileDoc);
 
         }  
+
+        [Route("singleFiles")]
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc)
+        {
+
+            return await _fileDocService.SingleFiles(singleFileDoc);
+
+        }  
         
     }
 }
