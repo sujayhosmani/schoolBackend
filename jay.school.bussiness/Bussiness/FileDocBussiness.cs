@@ -117,7 +117,7 @@ namespace jay.school.bussiness.Bussiness
 
         public async Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc)
         {
-            try
+           try
             {
 
                 string folderName = "";
@@ -135,27 +135,31 @@ namespace jay.school.bussiness.Bussiness
                 {
                     Directory.CreateDirectory(newPath);
                 }
-
-                if (singleFileDoc.Files.Length > 0)
-                {
-                    var fileName = ContentDispositionHeaderValue.Parse(singleFileDoc.Files.ContentDisposition).FileName.Trim('"');
-                    string fullPath = Path.Combine(newPath, fileName);
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                // List<AssignmentFiles> afiles = new List<AssignmentFiles>();
+                // afiles.Clear();
+                singleFileDoc.FilePath = new AssignmentFiles();
+              
+                    if (singleFileDoc.Files.Length > 0)
                     {
-                        await singleFileDoc.Files.CopyToAsync(stream);
+                        var fileName = ContentDispositionHeaderValue.Parse(singleFileDoc.Files.ContentDisposition).FileName.Trim('"');
+                        string fullPath = Path.Combine(newPath, fileName);
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            await singleFileDoc.Files.CopyToAsync(stream);
+                        }
+                        AssignmentFiles f = new AssignmentFiles
+                        {
+                            ImgUrl = fullPath,
+                            Key = 1,
+                            Type = "dvs",
+                            UploadedDate = singleFileDoc.UploadingDate
+
+                        };
+                        // afiles.Add(f);
+                        singleFileDoc.FilePath = f;
                     }
-                    AssignmentFiles f = new AssignmentFiles
-                    {
-                        ImgUrl = fullPath,
-                        Key = 1,
-                        Type = "multipleFileDoc.FileType",
-                        UploadedDate = "multipleFileDoc.UploadingDate"
-
-                    };
-                    // afiles.Add(f);
-                    singleFileDoc.FilePath = f;
-                }
-
+                
+            
                 return new CustomResponse<SingleFileDoc>(1, singleFileDoc, null);
             }
             catch (System.Exception ex)

@@ -77,6 +77,17 @@ namespace jay.school.Controllers
         public async Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc)
         {
 
+            FileDoc fileDoc1 = new FileDoc
+            {
+                File = Request.Form.Files[0],
+
+                FileName = Request.Form["FileName"],
+
+                FileType = Request.Form["FileType"],
+
+                From = Request.Form["From"]
+            };
+
             return await _fileDocService.SingleFiles(singleFileDoc);
 
         }  
