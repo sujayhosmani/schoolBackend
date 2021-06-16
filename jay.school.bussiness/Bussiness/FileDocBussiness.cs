@@ -150,9 +150,13 @@ namespace jay.school.bussiness.Bussiness
                         AssignmentFiles f = new AssignmentFiles
                         {
                             ImgUrl = fullPath,
-                            Key = 1,
-                            Type = "dvs",
-                            UploadedDate = singleFileDoc.UploadingDate
+                            Key = singleFileDoc.FilePath.Key,
+                            Type = singleFileDoc.FilePath.Type,
+                            UploadedDate = singleFileDoc.FilePath.UploadedDate,
+                            AssigFile = null,
+                            isUploaded = true,
+                            isUploading = false,
+
 
                         };
                         // afiles.Add(f);
