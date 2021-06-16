@@ -10,6 +10,6 @@ namespace jay.school.contracts.Contracts
     {
         Task<CustomResponse<FileDoc>> UploadFile(FileDoc fileDoc);
         Task<CustomResponse<MultipleFileDoc>> multipleFiles(MultipleFileDoc multipleFileDoc);
-        Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc)
+        Task<CustomResponse<SingleFileDoc>> SingleFiles(SingleFileDoc singleFileDoc);
     }
 }
