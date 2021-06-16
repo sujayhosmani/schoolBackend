@@ -38,7 +38,6 @@ namespace jay.school.contracts.Entities
     {
         public string  Id { get; set; }
         public string FileName { get; set; }
-        public string FileType { get; set; }
         public string From { get; set; }
         public string UploadingDate { get; set; }
         public string Subject { get; set; }
