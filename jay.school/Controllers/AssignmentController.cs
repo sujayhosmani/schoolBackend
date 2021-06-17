@@ -49,9 +49,9 @@ namespace jay.school.Controllers
 
         }
 
-        [Route("getSubmittedAssignment")]
+        [Route("getAllSubmittedAssignment")]
         [HttpGet]
-        public async Task<CustomResponse<List<SubmitAssignments>>> GetSubmittedAssignment(string assigId){
+        public async Task<CustomResponse<List<SubmitAssignments>>> GetAllSubmittedAssignment(string assigId){
            
             return await _assignmentService.GetSubmittedAssignment(assigId);
 
