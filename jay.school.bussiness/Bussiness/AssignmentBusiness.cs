@@ -150,6 +150,21 @@ namespace jay.school.bussiness.Bussiness
         }
 
 
+        public async Task<CustomResponse<String>> UpdateAssignmentRemark(string subId, string remark){
+            try{
+                var updateDef = Builders<SubmitAssignments>.Update.Set(o => o.Remark, remark);
+
+                await _submittedAssignment.UpdateOneAsync(o => o.Id == subId, updateDef);
+
+                return new CustomResponse<String>(0, null, "Assignment Reviewed");
+            
+            }catch(Exception e){
+                
+                return new CustomResponse<String>(0, null, e.ToString());
+            }
+        }
+
+
         public async Task<CustomResponse<SubmitAssignments>> SubmitAssignment(SubmitAssignments submitAssignment)
         {
 

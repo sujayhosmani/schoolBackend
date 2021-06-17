@@ -49,6 +49,14 @@ namespace jay.school.Controllers
 
         }
 
+        [Route("updateAssignmentRemark")]
+        [HttpGet]
+        public async Task<CustomResponse<String>> UpdateAssignmentRemark(string subId, string remark){
+           
+            return await _assignmentService.UpdateAssignmentRemark(subId,remark);
+
+        }
+
         [Route("getAllSubmittedAssignment")]
         [HttpGet]
         public async Task<CustomResponse<List<SubmitAssignments>>> GetAllSubmittedAssignment(string assigId){
