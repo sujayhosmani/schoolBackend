@@ -156,7 +156,7 @@ namespace jay.school.bussiness.Bussiness
 
                 await _submittedAssignment.UpdateOneAsync(o => o.Id == subId, updateDef);
 
-                return new CustomResponse<String>(0, null, "Assignment Reviewed");
+                return new CustomResponse<String>(1, "Assignment Reviewed", null);
             
             }catch(Exception e){
                 
