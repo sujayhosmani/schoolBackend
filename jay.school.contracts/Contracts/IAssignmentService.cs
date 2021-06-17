@@ -12,6 +12,7 @@ namespace jay.school.contracts.Contracts
         Task<CustomResponse<SubmitAssignments>> SubmitAssignment(SubmitAssignments submitAssignment);
         Task<CustomResponse<List<Assignment>>> GetAssignmentsByTid(string tid);
         Task<CustomResponse<SubmitAssignments>> GetSubmittedAssignment(string sid, string assigId);
+        Task<CustomResponse<List<SubmitAssignments>>> GetSubmittedAssignment(string assigId);
         Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string std, string section, string sid);
 
     }

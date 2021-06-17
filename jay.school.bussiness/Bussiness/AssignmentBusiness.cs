@@ -91,6 +91,25 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
+        public async Task<CustomResponse<List<SubmitAssignments>>> GetSubmittedAssignment(string assigId)
+        {
+            try
+            {
+
+                List<SubmitAssignments> sa = await _submittedAssignment.FindAsync(e => e.AssignmentId == assigId).Result.ToListAsync();
+
+                return new CustomResponse<List<SubmitAssignments>>(1, sa, null);
+
+            }
+            catch (Exception e)
+            {
+
+                return new CustomResponse<List<SubmitAssignments>>(0, null, e.ToString());
+
+            }
+
+        }
+
         public async Task<CustomResponse<List<Assignment>>> GetAssignmentsByClass(string std, string section, string sid)
         {
             try
