@@ -45,17 +45,23 @@ namespace jay.school.Controllers
 
             var uid = request.uid.ValueKind == JsonValueKind.Number ? request.uid.GetUInt64().ToString() : request.uid.GetString();
 
-            var tokenBuilder = new AccessToken(appSettings.AppID, appSettings.AppCertificate, request.channel, uid, 676767, 123456789);
+            var tokenBuilder = new AccessToken(appSettings.AppID, appSettings.AppCertificate, request.channel, uid);
 
-            tokenBuilder.addPrivilege(Privileges.kJoinChannel, request.expiredTs);
+            var expireTime = 3600;
 
-            tokenBuilder.addPrivilege(Privileges.kPublishAudioStream, request.expiredTs);
+            // calculate current time in seconds
+            var currentTime = Math.Floor(DateTime.Now.Millisecond / 1000.0);
 
-            tokenBuilder.addPrivilege(Privileges.kPublishVideoStream, request.expiredTs);
+            // calculate privilege expire time
+            var privilegeExpireTime = currentTime + expireTime;
 
-            tokenBuilder.addPrivilege(Privileges.kPublishDataStream, request.expiredTs);
+            tokenBuilder.addPrivilege(Privileges.kJoinChannel, 6666666);
 
-            tokenBuilder.addPrivilege(Privileges.kRtmLogin, request.expiredTs);
+            tokenBuilder.addPrivilege(Privileges.kPublishAudioStream, 6666666);
+
+            tokenBuilder.addPrivilege(Privileges.kPublishDataStream, 6666666);
+
+            tokenBuilder.addPrivilege(Privileges.kRtmLogin, 6666666);
 
             return Ok(new AuthenticateResponse
 
