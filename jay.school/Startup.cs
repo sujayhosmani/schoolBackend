@@ -2,6 +2,7 @@ using jay.school.bussiness.Bussiness;
 using jay.school.bussiness.Repository;
 using jay.school.contracts.Contracts;
 using jay.school.contracts.Entities;
+using jay.school.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,8 @@ namespace jay.school
             }); 
             
             services.AddControllers();
+
+            services.Configure <AppSettings>( Configuration.GetSection ("Appsettings")); 
 
             services.Configure<SchoolAppsettings>(Configuration);
 
