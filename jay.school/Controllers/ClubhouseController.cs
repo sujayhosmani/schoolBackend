@@ -45,7 +45,7 @@ namespace jay.school.Controllers
 
             var uid = request.uid.ValueKind == JsonValueKind.Number ? request.uid.GetUInt64().ToString() : request.uid.GetString();
 
-            var tokenBuilder = new AccessToken(appSettings.AppID, appSettings.AppCertificate, request.channel, uid);
+            var tokenBuilder = new AccessToken(appSettings.AppID, appSettings.AppCertificate, request.channel, uid, 676767, 123456789);
 
             tokenBuilder.addPrivilege(Privileges.kJoinChannel, request.expiredTs);
 
