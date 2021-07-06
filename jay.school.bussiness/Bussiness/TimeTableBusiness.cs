@@ -26,9 +26,9 @@ namespace jay.school.bussiness.Bussiness
         public TimeTableBusiness(IMDBContext timeTableMDNContext)
         {
             _timeTableMDBContext = timeTableMDNContext;
-        
+
             _timeTable = _timeTableMDBContext.GetCollection<TimeTable>(typeof(TimeTable).Name);
-            
+
             _subject = _timeTableMDBContext.GetCollection<SubjectsModel>(typeof(SubjectsModel).Name);
 
             _teacher = _timeTableMDBContext.GetCollection<Teacher>(typeof(Teacher).Name);
@@ -131,6 +131,18 @@ namespace jay.school.bussiness.Bussiness
                 else
                 {
                     timeTables = await _timeTable.FindAsync(time => (time.Std == std && time.Section == section)).Result.ToListAsync();
+
+                    List<CTSModel> tidCts = await _cts.FindAsync(e => ((e.Std == std) && (e.Section == section))).Result.ToListAsync();
+
+                    for (int i = 0; i < timeTables.Count; i++)
+                    {
+                        for (int w = 0; w < timeTables[i].weekSub.Count; w++)
+                        {
+                            CTSModel cts = tidCts.Where(e => e.Id == timeTables[i].weekSub[w].CTSId).FirstOrDefault();
+                            timeTables[i].weekSub[w].TId = cts?.TID ?? "";
+                            timeTables[i].weekSub[w].SubjectId = cts?.SubjectId ?? "";
+                        }
+                    }
                 }
 
                 return new CustomResponse<List<TimeTable>>(1, timeTables, null);
