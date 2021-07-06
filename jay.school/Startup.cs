@@ -56,6 +56,8 @@ namespace jay.school
 
             services.AddTransient<ITimeTableService, TimeTableBusiness>();
 
+            services.AddTransient<IAnnouncementService, AnnouncementBusiness>();
+
             services.AddTransient<IAssignmentService, AssignmentBusiness>();
 
             services.AddScoped<IMDBContext, SchoolMDBContext>(); 
