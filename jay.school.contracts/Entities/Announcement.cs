@@ -16,8 +16,10 @@ namespace jay.school.contracts.Entities
         public string UploadedId { get; set; }
         public string UploadedBy { get; set; }
         public string StartDate { get; set; }
+        public string Subject { get; set; }
         public bool isForSchool { get; set; }
-        public List<String> StdSec { get; set; }
+        public bool isForTeacher { get; set; }
+        public List<string> StdSec { get; set; }
         
     }
 }
