@@ -9,7 +9,7 @@ namespace jay.school.contracts.Contracts
     public interface IAnnouncementService
     {
         Task<CustomResponse<Announcement>> AddAnnouncement(Announcement announcement);
-        Task<CustomResponse<List<Announcement>>> GetAnnouncement(string from, string std, string sec);
+        Task<CustomResponse<List<Announcement>>> GetAnnouncement(string from, string std, string sec, string tid);
 
     }
 }

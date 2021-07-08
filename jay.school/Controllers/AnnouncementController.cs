@@ -31,9 +31,9 @@ namespace jay.school.Controllers
         
         [Route("getAAnnouncement")]
         [HttpGet]
-        public async Task<CustomResponse<List<Announcement>>> GetAnnouncement(string from, string std, string sec){
+        public async Task<CustomResponse<List<Announcement>>> GetAnnouncement(string from, string std, string sec, string tid){
 
-            return await _announcementService.GetAnnouncement(from, std, sec);
+            return await _announcementService.GetAnnouncement(from, std, sec, tid);
         }
 
 
