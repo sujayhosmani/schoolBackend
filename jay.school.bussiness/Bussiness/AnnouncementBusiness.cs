@@ -48,7 +48,7 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-        public async Task<CustomResponse<List<Announcement>>> GetAnnouncement(string from, string std, string sec)
+        public async Task<CustomResponse<List<Announcement>>> GetAnnouncement(string from, string std, string sec, string tid)
         {
             try
             {
@@ -59,7 +59,12 @@ namespace jay.school.bussiness.Bussiness
 
                     return new CustomResponse<List<Announcement>>(1, announcements, null);
                 }
-                else
+                else if(from == "teacher")
+                {
+                    List<Announcement> announcements = await _announcement.FindAsync(e => e.isForSchool == true || e.UploadedId == tid).Result.ToListAsync();
+
+                    return new CustomResponse<List<Announcement>>(1, announcements, null);
+                }else
                 {
                     List<Announcement> announcements = await _announcement.FindAsync(e => e.isForSchool == true).Result.ToListAsync();
 
