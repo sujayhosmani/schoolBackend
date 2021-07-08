@@ -55,8 +55,7 @@ namespace jay.school.bussiness.Bussiness
 
                 if (from == "student")
                 {
-                    string StdSec = std + sec;
-                    List<Announcement> announcements = await _announcement.FindAsync(e => e.StdSec.All(s => s.Equals(StdSec))).Result.ToListAsync();
+                    List<Announcement> announcements = await _announcement.FindAsync(e => ((e.StdSec.Contains(std + sec)) || (e.isForSchool == true))).Result.ToListAsync();
 
                     return new CustomResponse<List<Announcement>>(1, announcements, null);
                 }
