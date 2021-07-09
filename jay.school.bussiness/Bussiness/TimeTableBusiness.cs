@@ -118,7 +118,6 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-
         public async Task<CustomResponse<List<TimeTable>>> GetTimeTables(string from, string std, string section)
         {
             try
@@ -153,6 +152,7 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+        
         public async Task<CustomResponse<FullTimeTable>> GetFullTimeTables(bool isTT, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
             try
@@ -230,6 +230,7 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+        
         public async Task<CustomResponse<FullTimeTable>> GetTodayClass(string from, bool isCTS, bool isSubject, bool isTeacher, string std, string section)
         {
             try
@@ -297,8 +298,7 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
-
-
+        
         public async Task<CustomResponse<List<TimeTable>>> GetTodayTeacherTimeTable(string from, string tid)
         {
             try
@@ -610,8 +610,6 @@ namespace jay.school.bussiness.Bussiness
 
         }
 
-
-
         public async Task<CustomResponse<OnlineClass>> getOnlineClassByUniqId(string uniqId)
         {
 
@@ -814,6 +812,7 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+        
         public async Task<CustomResponse<string>> AddSubject(SubjectsModel subject)
         {
             try
@@ -842,6 +841,12 @@ namespace jay.school.bussiness.Bussiness
         }
 
 
+        public CustomResponse<List<string>> GetAttendance(string std, string sec, string sid){
+            
+            List<string> dd = _onlineClass.AsQueryable().Where(s => (s.Std == std) && (s.Section == sec)).Select(e => e.SubjectId).Distinct().ToList();
+            
+            return new CustomResponse<List<string>>(1, dd, null);
+        }
 
 
 

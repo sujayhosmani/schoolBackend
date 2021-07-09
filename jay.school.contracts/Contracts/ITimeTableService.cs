@@ -26,6 +26,7 @@ namespace jay.school.contracts.Contracts
 
         Task<CustomResponse<string>> AddTimeTables(List<TimeTable> timeTables);
         Task<CustomResponse<string>> AddSubject(SubjectsModel subject);
+        CustomResponse<List<string>> GetAttendance(string std, string sec, string sid);
 
     }
 }

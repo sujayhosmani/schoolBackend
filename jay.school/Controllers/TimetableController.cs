@@ -130,7 +130,9 @@ namespace jay.school.Controllers
             return await _timeTableSevice.GetTodayClassStudent(from, std, section, sid);
         }
     
-
+        public CustomResponse<List<string>> GetAttendance(string std, string sec, string sid){
+            return _timeTableSevice.GetAttendance(std, sec, sid);
+        }
 
     }
 
