@@ -16,9 +16,9 @@ namespace jay.school.contracts.Entities
     {
         public string Subject { get; set; }
         public string SubjectId { get; set; }
-        public string Total { get; set; }
-        public string Present { get; set; }
-        public string Absent { get; set; }
+        public long Total { get; set; }
+        public long Present { get; set; }
+        public long Absent { get; set; }
 
     }
 

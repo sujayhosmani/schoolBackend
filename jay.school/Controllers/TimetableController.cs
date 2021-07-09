@@ -132,8 +132,8 @@ namespace jay.school.Controllers
     
         [Route("GetAttendance")]
         [HttpGet]
-        public CustomResponse<List<string>> GetAttendance(string std, string sec, string sid){
-            return _timeTableSevice.GetAttendance(std, sec, sid);
+        public async Task<CustomResponse<List<OverAll>>> GetAttendance(string std, string sec, string sid){
+            return await _timeTableSevice.GetAttendance(std, sec, sid);
         }
 
     }
