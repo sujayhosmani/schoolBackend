@@ -841,11 +841,46 @@ namespace jay.school.bussiness.Bussiness
         }
 
 
-        public CustomResponse<List<string>> GetAttendance(string std, string sec, string sid){
+        public async Task<CustomResponse<List<OverAll>>> GetAttendance(string std, string sec, string sid){
             
-            List<string> dd = _onlineClass.AsQueryable().Where(s => (s.Std == std) && (s.Section == sec)).Select(e => e.Subject).Distinct().ToList();
+            List<string> SubjectList = _onlineClass.AsQueryable().Where(s => (s.Std == std) && (s.Section == sec)).Select(e => e.SubjectId).Distinct().ToList();
             
-            return new CustomResponse<List<string>>(1, dd, null);
+            List<OverAll> overAlls = new List<OverAll>();
+
+            for(int i = 0; i < SubjectList.Count; i++){
+                long totalClassTaken = await _onlineClass.CountDocumentsAsync(e => ((e.Std == std) && (e.Section == sec) && (e.SubjectId == SubjectList[i])));
+                long totalClassAttended = await _attendance.CountDocumentsAsync(a => ((a.Std == std) && (a.Section == sec) && (a.SubjectId == SubjectList[i]) && (a.StudentId == sid)));
+                long totalAbsent = totalClassTaken - totalClassAttended;
+                string subjectId = SubjectList[i];
+                SubjectsModel subjectsModel = _subject.FindAsync(s => subjectId == s.Id).Result.FirstOrDefault();
+                string subjectName = "";
+                if(subjectsModel != null){
+                    subjectName = subjectsModel.Subject;
+                }
+                OverAll overAll = new OverAll{
+                    Absent = totalAbsent,
+                    Present = totalClassAttended,
+                    Subject = subjectName,
+                    SubjectId = subjectId,
+                    Total = totalClassTaken
+                };
+                overAlls.Add(overAll);
+            }
+
+            long overAllClassTaken = await _onlineClass.CountDocumentsAsync(e => ((e.Std == std) && (e.Section == sec)));
+            long overAllClassAttended = await _attendance.CountDocumentsAsync(a => ((a.Std == std) && (a.Section == sec) && (a.StudentId == sid)));
+            long overAllAbsent = overAllClassTaken - overAllClassAttended;
+            OverAll overAll2 = new OverAll{
+                    Absent = overAllAbsent,
+                    Present = overAllClassAttended,
+                    Subject = "all",
+                    SubjectId = "all",
+                    Total = overAllClassTaken
+                };
+                overAlls.Add(overAll2);
+            
+
+            return new CustomResponse<List<OverAll>>(1, overAlls, null);
         }
 
 
