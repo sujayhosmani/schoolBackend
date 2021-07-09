@@ -849,10 +849,10 @@ namespace jay.school.bussiness.Bussiness
 
             for(int i = 0; i < SubjectList.Count; i++){
                 long totalClassTaken = await _onlineClass.CountDocumentsAsync(e => ((e.Std == std) && (e.Section == sec) && (e.SubjectId == SubjectList[i])));
-                long totalClassAttended = await _attendance.CountDocumentsAsync(a => ((a.Std == std) && (a.Section == sec) && (a.SubjectId == SubjectList[i]) && (a.StudentId == sid)));
+                long totalClassAttended = await _attendance.CountDocumentsAsync(a => ((a.SubjectId == SubjectList[i]) && (a.StudentId == sid)));
                 long totalAbsent = totalClassTaken - totalClassAttended;
                 string subjectId = SubjectList[i];
-                SubjectsModel subjectsModel = _subject.FindAsync(s => subjectId == s.Id).Result.FirstOrDefault();
+                SubjectsModel subjectsModel = await _subject.FindAsync(s => subjectId == s.Id).Result.FirstAsync();
                 string subjectName = "";
                 if(subjectsModel != null){
                     subjectName = subjectsModel.Subject;
