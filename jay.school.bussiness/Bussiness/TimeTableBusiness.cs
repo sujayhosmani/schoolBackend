@@ -716,7 +716,7 @@ namespace jay.school.bussiness.Bussiness
                 var EndTime = Convert.ToDateTime(attendance.ActualEndTime, culture);
                 if (DateTime.Now >= StartTime && DateTime.Now <= EndTime)
                 {
-                    var found = await _attendance.FindAsync(e => e.OnlineClassId == attendance.OnlineClassId && e.CurrentDate == attendance.CurrentDate && e.StudentId == attendance.StudentId).Result.ToListAsync();
+                    var found = await _attendance.FindAsync(e => e.OnlineClassId == attendance.OnlineClassId && e.StudentId == attendance.StudentId).Result.ToListAsync();
                     if (found.Count > 0)
                     {
                         return new CustomResponse<Attendance>(1, found[0], null);
@@ -849,7 +849,7 @@ namespace jay.school.bussiness.Bussiness
 
             for(int i = 0; i < SubjectList.Count; i++){
                 long totalClassTaken = await _onlineClass.CountDocumentsAsync(e => ((e.Std == std) && (e.Section == sec) && (e.SubjectId == SubjectList[i])));
-                long totalClassAttended = await _attendance.CountDocumentsAsync(a => ((a.SubjectId == SubjectList[i]) && (a.StudentId == sid)));
+                long totalClassAttended = await _attendance.CountDocumentsAsync(a => ((a.Std == std) && (a.Section == sec) && (a.SubjectId == SubjectList[i]) && (a.StudentId == sid)));
                 long totalAbsent = totalClassTaken - totalClassAttended;
                 string subjectId = SubjectList[i];
                 SubjectsModel subjectsModel = await _subject.FindAsync(s => subjectId == s.Id).Result.FirstAsync();
