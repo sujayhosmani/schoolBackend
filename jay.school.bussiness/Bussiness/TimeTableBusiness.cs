@@ -843,7 +843,7 @@ namespace jay.school.bussiness.Bussiness
 
         public CustomResponse<List<string>> GetAttendance(string std, string sec, string sid){
             
-            List<string> dd = _onlineClass.AsQueryable().Where(s => (s.Std == std) && (s.Section == sec)).Select(e => e.SubjectId).Distinct().ToList();
+            List<string> dd = _onlineClass.AsQueryable().Where(s => (s.Std == std) && (s.Section == sec)).Select(e => e.Subject).Distinct().ToList();
             
             return new CustomResponse<List<string>>(1, dd, null);
         }
