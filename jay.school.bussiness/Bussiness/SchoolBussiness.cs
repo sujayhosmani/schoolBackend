@@ -48,20 +48,40 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+
+        private CustomResponse<T> CheckForNull<T>(T data)
+        {
+            
+            if (data == null)
+            {
+                return new CustomResponse<T>(0, data, "No data found");
+            }
+            else
+            {
+                return new CustomResponse<T>(1, data, null);
+            }
+        }
+
         public async Task<CustomResponse<List<Student>>> GetStudentsByClass(string cls, string sec)
         {
             //TODO: add pagination later
             List<Student> stud = await _student.FindAsync(stu => stu.Class == cls && stu.Section == sec).Result.ToListAsync();
 
-            return new CustomResponse<List<Student>>(1, stud, null);
+            if(stud.Count > 0)
+            {
+                return new CustomResponse<List<Student>>(1, stud, null);
+            }
+
+            return new CustomResponse<List<Student>>(0, null, "No data found");
         }
         public async Task<CustomResponse<Student>> GetStudentsById(string id)
         {
             try
             {
-                Student stud = await _student.FindAsync(stu => stu.StudentId == id || stu.AdmissionNo == id).Result.FirstAsync();
+                Student stud = await _student.FindAsync(stu => stu.StudentId == id || stu.AdmissionNo == id).Result.FirstOrDefaultAsync();
 
-                return new CustomResponse<Student>(1, stud, null);
+                return CheckForNull<Student>(stud);
+
             }
             catch (Exception e)
             {
@@ -69,19 +89,26 @@ namespace jay.school.bussiness.Bussiness
             }
 
         }
+
         public async Task<CustomResponse<Student>> GetStudentsByPh(string ph)
         {
-            Student stud = await _student.FindAsync(stu => stu.FatherPh == ph || stu.MotherPh == ph).Result.FirstAsync();
+            Student stud = await _student.FindAsync(stu => stu.FatherPh == ph || stu.MotherPh == ph).Result.FirstOrDefaultAsync();
 
-            return new CustomResponse<Student>(1, stud, null);
+            return CheckForNull<Student>(stud);
         }
+
         public async Task<CustomResponse<List<Student>>> GetAllStudents()
         {
             try
             {
                 List<Student> stud = await _student.FindAsync(stu => true).Result.ToListAsync();
 
-                return new CustomResponse<List<Student>>(1, stud, null);
+                if (stud.Count > 0)
+                {
+                    return new CustomResponse<List<Student>>(1, stud, null);
+                }
+
+                return new CustomResponse<List<Student>>(0, null, "No data found");
             }
             catch (Exception e)
             {
