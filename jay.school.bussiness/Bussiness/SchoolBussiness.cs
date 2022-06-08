@@ -54,7 +54,7 @@ namespace jay.school.bussiness.Bussiness
             
             if (data == null)
             {
-                return new CustomResponse<T>(0, data, "No data found");
+                return new CustomResponse<T>(0, data, "Student not found");
             }
             else
             {
